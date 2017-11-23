@@ -1,36 +1,34 @@
 import { Geolocation } from '@ionic-native/geolocation';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
+enum Feature {
+    conditions = "conditions",
+    forecast = "forecast",
+    forecast10day = "forecast10day"
+}
 
 @Injectable()
 export class DataService {
-    private longitude?: number;
-    private latitude?: number;
-    private city?: string;
-    private urlBase: string = "http://api.wunderground.com/api/1760644cb1b2f8da/geolookup/q/";
+    private urlEnd: string;
+    private urlBase: string = "http://api.wunderground.com/api/1760644cb1b2f8da/";
 
-    constructor(private http: Http, private geo:Geolocation) { }
+    constructor(private http: Http, private geo:Geolocation) {}
     
     getLocation(){
-        return this.geo.getCurrentPosition().then((res)=>{
-            this.latitude = res.coords.latitude;
-            this.longitude = res.coords.longitude;
-        }).catch((err)=>{
-            this.longitude = null;
-            this.latitude = null;
-            this.city = null; 
+        return this.geo.getCurrentPosition().then( res => {
+            this.urlEnd = `/q/${res.coords.latitude},${res.coords.longitude}.json`;
+        }).catch( err => {
             console.log(err);
         });
     }
 
-    getCurrent(){
-        this.getLocation().then(res=>{
-            this.http.get(this.urlBase + this.latitude + "," + this.longitude + ".json").toPromise().then(res => {
-                console.log(res.json());
-            });
+    async getCurrent(): Promise<Response>{
+        let promise;
+        await this.getLocation().then(res => {
+            promise = this.http.get(this.urlBase + Feature.conditions + this.urlEnd).toPromise();
         });
+        return promise;
     }
+
 }
