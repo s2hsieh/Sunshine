@@ -1,12 +1,30 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Current Forecast
+        {{forecast?.display_location?.city}}
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <button>Test</button>
-  <h6>{{forecast?.display_location?.city}}</h6>
+  <ion-card>
+    <ion-card-header>
+        <ion-row>
+          <ion-col col-3 offset-3>
+              <img [src]= "forecast?.icon_url" />
+          </ion-col>
+          <ion-col col-3>
+              <h1>{{forecast?.temp_c}}</h1>
+          </ion-col>
+          <ion-col col-3 offset-3>
+              <h1>{{forecast?.weather}}</h1>              
+          </ion-col>
+        </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+          
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

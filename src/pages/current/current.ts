@@ -11,13 +11,14 @@ export class Current implements OnInit{
   forecast = {};
 
   ngOnInit(){
-    let loader = this.loader.create({
+    let loader = this.loadingCtrl.create({
       content: "Plsease wait..."
     });
     loader.present();
 
-    this.data.getCurrent().then(res => {
+    this.data.getForecast("conditions").then(res => {
       this.forecast = res.json().current_observation;
+      console.log(this.forecast);
       loader.dismiss();
     }).catch(err => {
       console.log(err);
@@ -25,7 +26,6 @@ export class Current implements OnInit{
     });
   }
 
-  constructor(public navCtrl: NavController, private data: DataService, private loader:LoadingController) {}
-
+  constructor(public navCtrl: NavController, private data: DataService, private loadingCtrl:LoadingController) {}
 
 }
