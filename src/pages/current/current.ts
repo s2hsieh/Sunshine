@@ -1,3 +1,4 @@
+import { CurrentObservation } from './../../models/ICurrentObservation';
 import { DataService } from './../../services/data';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
@@ -8,7 +9,7 @@ import { LoadingController } from 'ionic-angular/components/loading/loading-cont
 })
 export class Current implements OnInit{
 
-  forecast = {};
+  forecast: CurrentObservation;
 
   ngOnInit(){
     let loader = this.loadingCtrl.create({
@@ -17,8 +18,11 @@ export class Current implements OnInit{
     loader.present();
 
     this.data.getForecast("conditions").then(res => {
-      this.forecast = res.json().current_observation;
+      this.forecast = <CurrentObservation> res.json().current_observation;
       console.log(this.forecast);
+      if (!this.forecast) {
+        console.log(res.json().response.error);
+      }
       loader.dismiss();
     }).catch(err => {
       console.log(err);

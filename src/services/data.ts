@@ -17,7 +17,7 @@ export class DataService {
         });
     }
 
-    async getForecast( feature:string ): Promise<Response>{
+    async getForecast( feature: string ): Promise<Response>{
         let promise;
         await this.getLocation().then(res => {
             promise = this.http.get(this.urlBase + feature + this.urlEnd).toPromise();
