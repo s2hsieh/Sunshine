@@ -1,46 +1,58 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-        {{forecast?.display_location?.city}}
+      {{forecast?.display_location?.city}}
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding-top>
-  <ion-card *ngIf="forecast" >
+  <ion-card *ngIf="forecast">
     <ion-card-header>
-        <ion-grid>
-          <ion-row align-items-center justify-content-center>
-            <ion-col col-3>
-                <img [src]= "forecast.icon_url" />
-            </ion-col>
-            <ion-col col-3>
-                <h1 text-center>{{forecast.temp_c}}&#8451;</h1>
-            </ion-col>
-          </ion-row>
-          <ion-row justify-content-center>
-            <ion-col col-6>
-              <h1 text-center>{{forecast.weather}}</h1>              
+      <ion-grid>
+        <ion-row align-items-center justify-content-center>
+          <ion-col col-3>
+            <img [src]="forecast.icon_url" />
           </ion-col>
-          </ion-row>
-        </ion-grid>
+          <ion-col col-3>
+            <h1 text-center>{{forecast.temp_c}}&#8451;</h1>
+          </ion-col>
+        </ion-row>
+        <ion-row justify-content-center>
+          <ion-col col-6>
+            <h1 text-center>{{forecast.weather}}</h1>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
-          <ion-row justify-content-center>
-            <ion-col col-4>
-              <h2 text-center>Precipitation</h2>
-              <h3 text-center>{{forecast.precip_1hr_metric}} mm</h3>
-            </ion-col>
-            <ion-col col-4>
-              <h2 text-center>Wind</h2>
-              <h3 text-center>{{forecast.wind_kph}} km/h {{forecast.wind_dir}}</h3>
-            </ion-col>
-            <ion-col col-4>
-              <h2 text-center>UV Level</h2>
-              <h3 text-center>{{forecast.UV}} ({{forecast.UV|uvLevel}})</h3>
-            </ion-col>
-          </ion-row>
+        <ion-row justify-content-center>
+          <ion-col col-4>
+            <h2 text-center>Precipitation</h2>
+            <h3 text-center>{{forecast.precip_1hr_metric}} mm</h3>
+          </ion-col>
+          <ion-col col-4>
+            <h2 text-center>Wind</h2>
+            <h3 text-center>{{forecast.wind_kph}} km/h {{forecast.wind_dir}}</h3>
+          </ion-col>
+          <ion-col col-4>
+            <h2 text-center>UV Level</h2>
+            <h3 text-center>{{forecast.UV}} ({{forecast.UV|uvLevel}})</h3>
+          </ion-col>
+          <ion-col col-4>
+            <h2 text-center>Pressure</h2>
+            <h3 text-center>{{forecast.pressure_mb}} mb</h3>
+          </ion-col>
+          <ion-col col-4>
+            <h2 text-center>Visibility</h2>
+            <h3 text-center>{{forecast.visibility_km}} km</h3>
+          </ion-col>
+          <ion-col col-4>
+            <h2 text-center>Humidity</h2>
+            <h3 text-center>{{forecast.relative_humidity}}</h3>
+          </ion-col>
+        </ion-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>
