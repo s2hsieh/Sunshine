@@ -6,7 +6,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding-top>
   <ion-card *ngIf="forecast" >
     <ion-card-header>
         <ion-grid>
@@ -29,13 +29,16 @@
       <ion-grid>
           <ion-row justify-content-center>
             <ion-col col-4>
-              <h2 text-center>{{forecast.precip_1hr_metric}}mm</h2>
+              <h2 text-center>Precipitation</h2>
+              <h3 text-center>{{forecast.precip_1hr_metric}} mm</h3>
             </ion-col>
             <ion-col col-4>
-              <h2 text-center>{{forecast.wind_kph}}km/h {{forecast.wind_dir}}</h2>
+              <h2 text-center>Wind</h2>
+              <h3 text-center>{{forecast.wind_kph}} km/h {{forecast.wind_dir}}</h3>
             </ion-col>
             <ion-col col-4>
-              <h2 text-center>UV {{forecast.UV}}</h2>
+              <h2 text-center>UV Level</h2>
+              <h3 text-center>{{forecast.UV}} ({{forecast.UV|uvLevel}})</h3>
             </ion-col>
           </ion-row>
       </ion-grid>

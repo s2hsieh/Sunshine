@@ -1,3 +1,4 @@
+import { UvLevelPipe } from './../pipes/uv-level';
 import { DataService } from './../services/data';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,7 +21,8 @@ import { HttpModule } from '@angular/http';
     ThreeDays,
     TenDays,
     Current,
-    TabsPage
+    TabsPage,
+    UvLevelPipe
   ],
   imports: [
     BrowserModule,

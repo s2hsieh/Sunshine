@@ -9,7 +9,7 @@ export class DataService {
 
     constructor(private http: Http, private geo:Geolocation) {}
     
-    getLocation(){
+    private getLocation(){
         return this.geo.getCurrentPosition().then( res => {
             this.urlEnd = `/q/${res.coords.latitude},${res.coords.longitude}.json`;
         }).catch( err => {
