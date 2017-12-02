@@ -1,9 +1,7 @@
 import { CurrentObservation } from './../../models/ICurrentObservation';
 import { DataService } from './../../services/data';
 import { Component, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
-import { Refresher } from 'ionic-angular/components/refresher/refresher';
+import { NavController, LoadingController, Refresher } from 'ionic-angular';
 
 @Component({
   templateUrl: 'current.html'
@@ -18,7 +16,7 @@ export class Current implements OnInit{
 
   constructor(public navCtrl: NavController, private data: DataService, private loadingCtrl:LoadingController) {}
 
-  fetchData(refresher?:Refresher){
+  fetchData(refresher:Refresher){
     if (!refresher) {
       var loader = this.loadingCtrl.create({
         content: "Plsease wait..."
@@ -29,7 +27,7 @@ export class Current implements OnInit{
       this.forecast = <CurrentObservation> res.json().current_observation;
       console.log(this.forecast);
       if (!this.forecast) {
-        throw new Error("Failed to fetch data");
+        throw new Error("Failed to fetch data from API");
       }
       refresher ? refresher.complete() : loader.dismiss();
     }).catch(err => {

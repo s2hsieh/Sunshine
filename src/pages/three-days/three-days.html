@@ -6,6 +6,26 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding-top>
 
+  <ion-refresher (ionRefresh)="fetchData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="forecast" >
+    <ion-item *ngFor="let day of forecast">
+      <ion-title>{{day.date.weekday}}</ion-title>
+      <ion-row text-center>
+        <ion-col col-3>
+          <img [src]="day.icon_url" />
+        </ion-col>
+        <ion-col col-6>
+          {{day.conditions}}
+        </ion-col>
+        <ion-col col-3>
+          {{day.high.celsius}}&#8451; | {{day.low.celsius}}&#8451;
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
 </ion-content>
