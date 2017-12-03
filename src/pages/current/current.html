@@ -32,30 +32,36 @@
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
-        <ion-row justify-content-center>
+        <ion-row justify-content-center align-items-center text-center>
           <ion-col col-4>
-            <h2 text-center>Precipitation</h2>
-            <h3 text-center>{{forecast.precip_1hr_metric}} mm</h3>
+            <ion-icon name="umbrella"></ion-icon>
+            <h2>Precipitation</h2>
+            <h3>{{forecast.precip_1hr_metric}} mm</h3>
           </ion-col>
           <ion-col col-4>
-            <h2 text-center>Wind</h2>
-            <h3 text-center>{{forecast.wind_kph}} km/h {{forecast.wind_dir}}</h3>
+            <ion-icon name="flag"></ion-icon>
+            <h2>Wind</h2>
+            <h3>{{forecast.wind_kph}} km/h {{forecast.wind_dir}}</h3>
           </ion-col>
           <ion-col col-4>
-            <h2 text-center>UV Level</h2>
-            <h3 text-center>{{forecast.UV}} ({{forecast.UV|uvLevel}})</h3>
+            <ion-icon name="sunny"></ion-icon>
+            <h2>UV Level</h2>
+            <h3>{{forecast.UV}} ({{forecast.UV|uvLevel}})</h3>
           </ion-col>
           <ion-col col-4>
-            <h2 text-center>Pressure</h2>
-            <h3 text-center>{{forecast.pressure_mb}} mb</h3>
+            <ion-icon name="speedometer"></ion-icon>
+            <h2>Pressure</h2>
+            <h3>{{forecast.pressure_mb}} mb</h3>
           </ion-col>
           <ion-col col-4>
-            <h2 text-center>Visibility</h2>
-            <h3 text-center>{{forecast.visibility_km}} km</h3>
+            <ion-icon name="eye"></ion-icon>
+            <h2>Visibility</h2>
+            <h3>{{forecast.visibility_km}} km</h3>
           </ion-col>
           <ion-col col-4>
-            <h2 text-center>Humidity</h2>
-            <h3 text-center>{{forecast.relative_humidity}}</h3>
+            <ion-icon name="water"></ion-icon>
+            <h2>Humidity</h2>
+            <h3>{{forecast.relative_humidity}}</h3>
           </ion-col>
         </ion-row>
       </ion-grid>
