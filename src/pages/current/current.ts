@@ -1,7 +1,7 @@
 import { CurrentObservation } from './../../models/ICurrentObservation';
 import { DataService } from './../../services/data';
 import { Component, OnInit } from '@angular/core';
-import { App, NavController, LoadingController, Refresher } from 'ionic-angular';
+import { App, NavController, LoadingController, Refresher, NavParams } from 'ionic-angular';
 
 @Component({
   templateUrl: 'current.html'
@@ -9,12 +9,17 @@ import { App, NavController, LoadingController, Refresher } from 'ionic-angular'
 export class Current implements OnInit{
 
   forecast: CurrentObservation;
+  private search: string;
 
   ngOnInit(){
     this.fetchData(null);
   }
 
-  constructor(public navCtrl: NavController, private appCtrl:App, private data: DataService, private loadingCtrl:LoadingController) {}
+  constructor(param:NavParams, public navCtrl: NavController, private appCtrl:App, private data: DataService, private loadingCtrl:LoadingController) {
+    if (typeof param.data == 'string') {
+      this.search = param.data;
+    }
+  }
 
   openSearch(){
     this.appCtrl.getRootNav().push("SearchPage", );
@@ -27,9 +32,8 @@ export class Current implements OnInit{
       });
       loader.present();
     }
-    this.data.getForecast("conditions").then(res => {
+    this.data.getForecast("conditions", this.search).then(res => {
       this.forecast = <CurrentObservation> res.json().current_observation;
-      console.log(this.forecast);
       if (!this.forecast) {
         throw new Error("Failed to fetch data from API");
       }

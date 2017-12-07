@@ -8,7 +8,7 @@ import { NavController, Refresher, LoadingController } from 'ionic-angular';
 })
 export class ThreeDays implements OnInit{
 
-  forecast:ForecastDay[];
+  forecasts:ForecastDay[];
 
   ngOnInit(){
     this.fetchData(null);
@@ -24,9 +24,9 @@ export class ThreeDays implements OnInit{
       loader.present();
     }
     this.data.getForecast("forecast").then(res => {
-      this.forecast = <ForecastDay[]> res.json().forecast.simpleforecast.forecastday;
-      console.log(this.forecast);
-      if (!this.forecast) {
+      this.forecasts = <ForecastDay[]> res.json().forecast.simpleforecast.forecastday;
+      console.log(this.forecasts);
+      if (!this.forecasts) {
         throw new Error("Failed to fetch data from API");
       }
       refresher ? refresher.complete() : loader.dismiss();

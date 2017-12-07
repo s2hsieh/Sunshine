@@ -1,13 +1,7 @@
+import { TabsPage } from './../tabs/tabs';
 import { DataService } from './../../services/data';
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
-
-/**
- * Generated class for the SearchPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -15,18 +9,22 @@ import { IonicPage, NavController } from 'ionic-angular';
 })
 export class SearchPage {
 
-  places:string[];
+  places: string[];
 
-  constructor(public navCtrl: NavController, private data:DataService) {}
+  constructor(public navCtrl: NavController, private data: DataService) { }
 
-  onInput(ev){
-    let search:string = ev.target.value;
+  onInput(ev) {
+    let search: string = ev.target.value;
     if (search) {
       this.data.getLocationSearch(search).then(res => {
         this.places = this.data.results;
       });
-    }else{
+    } else {
       this.places = [];
     }
+  }
+
+  openForecast(place: string) {
+    this.navCtrl.setRoot(TabsPage, { place: place });
   }
 }

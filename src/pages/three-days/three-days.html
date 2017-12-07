@@ -12,8 +12,8 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list *ngIf="forecast">
-    <ion-item *ngFor="let day of forecast">
+  <ion-list *ngIf="forecasts">
+    <ion-item *ngFor="let day of forecasts">
       <h1>{{day.period == 1 ? "Today" : day.date.weekday}}</h1>
       <ion-row>
         <ion-col col-3 text-center>

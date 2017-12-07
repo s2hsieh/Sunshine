@@ -12,7 +12,7 @@ export class DataService {
     private urlEnd: string;
     private weatherUrlBase: string = `http://api.wunderground.com/api/${this.keys.weatherUnderground}/`;
     private locationUrlBase: string = "http://dev.virtualearth.net/REST/v1/Locations";
-    results:string[];
+    results: string[];
 
     constructor(private http: Http, private jsonp: Jsonp, private geo: Geolocation) { }
 
@@ -25,16 +25,16 @@ export class DataService {
     getLocationSearch(search: string) {
         let that = this;
         this.results = [];
-        return this.jsonp.get(`${this.locationUrlBase}?q=${encodeURI(search)}&key=${this.keys.bingMaps}&jsonp=JSONP_CALLBACK`)
+        return this.jsonp.get(`${this.locationUrlBase}?q=${encodeURI(search)}&maxResults=20&key=${this.keys.bingMaps}&jsonp=JSONP_CALLBACK`)
             .toPromise().then(res => {
                 res.json().resourceSets[0].resources.forEach(r => {
                     let cord = r.point.coordinates;
                     that.urlEnd = `/q/${cord[0]},${cord[1]}.json`;
                     that.http.get(that.weatherUrlBase + "geolookup" + that.urlEnd).toPromise().then(res => {
                         let place = res.json().location;
-                        that.results.push(place.city);
+                        that.results.push(place.city + ", " + place.state + ", " + place.country_name);
                     })
-                    .catch(that.errorHandler);
+                        .catch(that.errorHandler);
                 });
             }).catch(this.errorHandler);
     }
