@@ -12,6 +12,7 @@ export class DataService {
     private urlEnd: string;
     private weatherUrlBase: string = `http://api.wunderground.com/api/${this.keys.weatherUnderground}/`;
     private locationUrlBase: string = "http://dev.virtualearth.net/REST/v1/Locations";
+    results:string[];
 
     constructor(private http: Http, private jsonp: Jsonp, private geo: Geolocation) { }
 
@@ -21,29 +22,34 @@ export class DataService {
         }).catch(this.errorHandler);
     }
 
-    private getLocationSearch(search: string) {
-        return this.jsonp.get(`${this.locationUrlBase}?q=${encodeURI(search)}&maxResults=1&key=${this.keys.bingMaps}&jsonp=JSONP_CALLBACK`)
-        .toPromise().then(res => {
-            let cord = res.json().resourceSets[0].resources[0].point.coordinates;
-            this.urlEnd = `/q/${cord[0]},${cord[1]}.json`;
-        }).catch(this.errorHandler);
-    }
-    
-    private bingJsonpCallback() {
-        
+    getLocationSearch(search: string) {
+        let that = this;
+        this.results = [];
+        return this.jsonp.get(`${this.locationUrlBase}?q=${encodeURI(search)}&key=${this.keys.bingMaps}&jsonp=JSONP_CALLBACK`)
+            .toPromise().then(res => {
+                res.json().resourceSets[0].resources.forEach(r => {
+                    let cord = r.point.coordinates;
+                    that.urlEnd = `/q/${cord[0]},${cord[1]}.json`;
+                    that.http.get(that.weatherUrlBase + "geolookup" + that.urlEnd).toPromise().then(res => {
+                        let place = res.json().location;
+                        that.results.push(place.city);
+                    })
+                    .catch(that.errorHandler);
+                });
+            }).catch(this.errorHandler);
     }
 
     async getForecast(feature: string, location?: string): Promise<Response> {
         let that = this;
         let promise;
         if (!location) {
-            await this.getLocationGPS().then(fetchWeather);
+            await this.getLocationGPS().then(fetchWeatherPromise);
         } else {
-            await this.getLocationSearch(location).then(fetchWeather);
+            await this.getLocationSearch(location).then(fetchWeatherPromise);
         }
         return promise;
 
-        function fetchWeather() {
+        function fetchWeatherPromise() {
             promise = that.http.get(that.weatherUrlBase + feature + that.urlEnd).toPromise().catch(that.errorHandler);
         }
     }

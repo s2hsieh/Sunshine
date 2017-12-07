@@ -1,7 +1,7 @@
 import { CurrentObservation } from './../../models/ICurrentObservation';
 import { DataService } from './../../services/data';
 import { Component, OnInit } from '@angular/core';
-import { NavController, LoadingController, Refresher } from 'ionic-angular';
+import { App, NavController, LoadingController, Refresher } from 'ionic-angular';
 
 @Component({
   templateUrl: 'current.html'
@@ -14,9 +14,13 @@ export class Current implements OnInit{
     this.fetchData(null);
   }
 
-  constructor(public navCtrl: NavController, private data: DataService, private loadingCtrl:LoadingController) {}
+  constructor(public navCtrl: NavController, private appCtrl:App, private data: DataService, private loadingCtrl:LoadingController) {}
 
-  fetchData(refresher:Refresher){
+  openSearch(){
+    this.appCtrl.getRootNav().push("SearchPage", );
+  }
+
+  private fetchData(refresher:Refresher){
     if (!refresher) {
       var loader = this.loadingCtrl.create({
         content: "Plsease wait..."

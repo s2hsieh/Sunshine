@@ -3,6 +3,11 @@
     <ion-title>
       {{forecast?.display_location?.city}}
     </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="openSearch()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
