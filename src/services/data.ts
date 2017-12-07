@@ -27,7 +27,13 @@ export class DataService {
         this.results = [];
         return this.jsonp.get(`${this.locationUrlBase}?q=${encodeURI(search)}&maxResults=20&key=${this.keys.bingMaps}&jsonp=JSONP_CALLBACK`)
             .toPromise().then(res => {
-                res.json().resourceSets[0].resources.forEach(r => {
+                let data:any[];
+                try {
+                    data = res.json().resourceSets[0].resources;
+                } catch (error) {
+                    throw new Error("Failed to get search results");
+                }
+                data.forEach(r => {
                     let cord = r.point.coordinates;
                     that.urlEnd = `/q/${cord[0]},${cord[1]}.json`;
                     that.http.get(that.weatherUrlBase + "geolookup" + that.urlEnd).toPromise().then(res => {

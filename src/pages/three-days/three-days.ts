@@ -1,30 +1,35 @@
 import { ForecastDay } from './../../models/IForeCastDay';
 import { DataService } from './../../services/data';
 import { Component, OnInit } from '@angular/core';
-import { NavController, Refresher, LoadingController } from 'ionic-angular';
+import { NavController, Refresher, LoadingController, NavParams } from 'ionic-angular';
 
 @Component({
   templateUrl: 'three-days.html'
 })
-export class ThreeDays implements OnInit{
+export class ThreeDays implements OnInit {
 
-  forecasts:ForecastDay[];
+  forecasts: ForecastDay[];
+  private search: string;
 
-  ngOnInit(){
+  ngOnInit() {
     this.fetchData(null);
   }
 
-  constructor(public navCtrl: NavController,private data:DataService, private loadingCtrl:LoadingController) {}
+  constructor(public navCtrl: NavController, param: NavParams, private data: DataService, private loadingCtrl: LoadingController) {
+    if (typeof param.data == 'string') {
+      this.search = param.data;
+    }
+  }
 
-  fetchData(refresher:Refresher){
+  fetchData(refresher: Refresher) {
     if (!refresher) {
       var loader = this.loadingCtrl.create({
         content: "Plsease wait..."
       });
       loader.present();
     }
-    this.data.getForecast("forecast").then(res => {
-      this.forecasts = <ForecastDay[]> res.json().forecast.simpleforecast.forecastday;
+    this.data.getForecast("forecast", this.search).then(res => {
+      this.forecasts = <ForecastDay[]>res.json().forecast.simpleforecast.forecastday;
       console.log(this.forecasts);
       if (!this.forecasts) {
         throw new Error("Failed to fetch data from API");
