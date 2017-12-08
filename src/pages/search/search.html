@@ -1,13 +1,13 @@
 <ion-header>
   <ion-navbar>
-    <ion-searchbar autocomplete="on" showCancelButton debounce=1000 (ionInput)="onInput($event)"></ion-searchbar>
+    <ion-searchbar autocomplete="on" debounce=1000 (ionInput)="onInput($event)"></ion-searchbar>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list *ngIf="places?.length">
     <ion-item *ngFor="let place of places" (click)="openForecast(place)">
-      {{place}}
+      {{place.city + ", " + place.provOrState + ", " + place.country}}
     </ion-item>
   </ion-list>
 </ion-content>

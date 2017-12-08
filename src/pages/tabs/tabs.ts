@@ -4,13 +4,14 @@ import { NavParams } from 'ionic-angular';
 import { ThreeDays } from '../three-days/three-days';
 import { TenDays } from '../ten-days/ten-days';
 import { Current } from '../current/current';
+import { Place } from '../../models/IPlace';
 
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
-  place: string;
+  place: Place;
 
   tab1Root = Current;
   tab2Root = ThreeDays;

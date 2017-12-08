@@ -2,6 +2,7 @@ import { TabsPage } from './../tabs/tabs';
 import { DataService } from './../../services/data';
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
+import { Place } from '../../models/IPlace';
 
 @IonicPage()
 @Component({
@@ -9,7 +10,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 })
 export class SearchPage {
 
-  places: string[];
+  places: Place[];
 
   constructor(public navCtrl: NavController, private data: DataService) { }
 

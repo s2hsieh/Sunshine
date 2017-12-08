@@ -1,3 +1,4 @@
+import { Place } from './../../models/IPlace';
 import { CurrentObservation } from './../../models/ICurrentObservation';
 import { DataService } from './../../services/data';
 import { Component, OnInit } from '@angular/core';
@@ -9,15 +10,16 @@ import { App, NavController, LoadingController, Refresher, NavParams } from 'ion
 export class Current implements OnInit{
 
   forecast: CurrentObservation;
-  private search: string;
+  private search: Place;
 
   ngOnInit(){
     this.fetchData(null);
   }
 
   constructor(param:NavParams, public navCtrl: NavController, private appCtrl:App, private data: DataService, private loadingCtrl:LoadingController) {
-    if (typeof param.data == 'string') {
-      this.search = param.data;
+    this.search = param.data;
+    if (!this.search.city) {
+      this.search = null;
     }
   }
 
