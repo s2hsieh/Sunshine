@@ -1,7 +1,7 @@
 import { TabsPage } from './../tabs/tabs';
 import { DataService } from './../../services/data';
-import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, Searchbar } from 'ionic-angular';
 import { Place } from '../../models/IPlace';
 
 @IonicPage()
@@ -10,7 +10,14 @@ import { Place } from '../../models/IPlace';
 })
 export class SearchPage {
 
+  ionViewDidEnter(){
+    setTimeout(() => {
+      this.searchbar.setFocus();
+    });
+  }
+
   places: Place[];
+  @ViewChild(Searchbar) searchbar: Searchbar;
 
   constructor(public navCtrl: NavController, private data: DataService) { }
 
