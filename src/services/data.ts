@@ -60,7 +60,7 @@ export class DataService {
             }).catch(this.errorHandler);
     }
 
-    async getForecast(feature: string, location?: Place): Promise<Response> {
+    async getForecast(feature: string, location: Place): Promise<Response> {
         let that = this;
         let promise;
         if (!location) {

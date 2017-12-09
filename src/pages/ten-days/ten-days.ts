@@ -1,13 +1,48 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component, OnInit } from '@angular/core';
+import { NavController, Refresher, NavParams, LoadingController } from 'ionic-angular';
+import { Place } from '../../models/IPlace';
+import { DataService } from '../../services/data';
+import { ForecastDay } from '../../models/IForeCastDay';
 
 @Component({
   templateUrl: 'ten-days.html'
 })
-export class TenDays {
+export class TenDays implements OnInit{
 
-  constructor(public navCtrl: NavController) {
+  forecasts: ForecastDay[];
+  search: Place;
 
+  ngOnInit() {
+    this.fetchData(null);
+  }
+
+  constructor(public navCtrl: NavController, param: NavParams, private data: DataService, private loadingCtrl: LoadingController) {
+    this.search = param.data;
+    // check if data was passed in
+    if (!this.search.city) {
+      this.search = undefined;
+    }
+  }
+
+  fetchData(refresher: Refresher) {
+    if (!refresher) {
+      var loader = this.loadingCtrl.create({
+        content: "Plsease wait..."
+      });
+      loader.present();
+    }
+    this.data.getForecast("forecast10day", this.search).then(res => {
+      try {
+        this.forecasts = <ForecastDay[]>res.json().forecast.simpleforecast.forecastday;
+      } catch (error) {
+        throw new Error("Failed to fetch data from API");
+      }
+      console.log(this.forecasts);
+      refresher ? refresher.complete() : loader.dismiss();
+    }).catch(err => {
+      console.log(err);
+      refresher ? refresher.complete() : loader.dismiss();
+    });
   }
 
 }

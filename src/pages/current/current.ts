@@ -18,8 +18,9 @@ export class Current implements OnInit{
 
   constructor(param:NavParams, public navCtrl: NavController, private appCtrl:App, private data: DataService, private loadingCtrl:LoadingController) {
     this.search = param.data;
+    // check if data was passed in
     if (!this.search.city) {
-      this.search = null;
+      this.search = undefined;
     }
   }
 
@@ -35,10 +36,12 @@ export class Current implements OnInit{
       loader.present();
     }
     this.data.getForecast("conditions", this.search).then(res => {
-      this.forecast = <CurrentObservation> res.json().current_observation;
-      if (!this.forecast) {
+      try {
+        this.forecast = <CurrentObservation> res.json().current_observation;
+      } catch (error) {
         throw new Error("Failed to fetch data from API");
       }
+      console.log(this.forecast);
       refresher ? refresher.complete() : loader.dismiss();
     }).catch(err => {
       console.log(err);

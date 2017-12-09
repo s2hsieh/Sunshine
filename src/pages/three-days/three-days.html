@@ -1,6 +1,9 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
+    <ion-title *ngIf="search" >
+      Next Few Days for {{search.city}}
+    </ion-title>
+    <ion-title *ngIf="!search" >
       Next Few Days
     </ion-title>
   </ion-navbar>
@@ -41,4 +44,5 @@
       </ion-row>
     </ion-item>
   </ion-list>
+  
 </ion-content>

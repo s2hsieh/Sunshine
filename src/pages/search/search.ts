@@ -26,6 +26,6 @@ export class SearchPage {
   }
 
   openForecast(place: string) {
-    this.navCtrl.setRoot(TabsPage, { place: place });
+    this.navCtrl.push(TabsPage, { place: place });
   }
 }
