@@ -1,19 +1,23 @@
-import { UvLevelPipe } from './../pipes/uv-level';
-import { DataService } from './../services/data';
 import { NgModule, ErrorHandler } from '@angular/core';
+import { HttpModule, JsonpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { Geolocation } from '@ionic-native/geolocation'
 
 import { ThreeDays } from '../pages/three-days/three-days';
 import { TenDays } from '../pages/ten-days/ten-days';
 import { Current } from '../pages/current/current';
 import { TabsPage } from '../pages/tabs/tabs';
 
+import { UvLevelPipe } from './../pipes/uv-level';
+import { DataService } from './../services/data';
+import { PreferencesService } from '../services/preferences';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { HttpModule, JsonpModule } from '@angular/http';
+import { Geolocation } from '@ionic-native/geolocation'
+import { NativeStorage } from '@ionic-native/native-storage'
+
 
 @NgModule({
   declarations: [
@@ -42,7 +46,9 @@ import { HttpModule, JsonpModule } from '@angular/http';
     StatusBar,
     SplashScreen,
     Geolocation,
+    NativeStorage,
     DataService,
+    PreferencesService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

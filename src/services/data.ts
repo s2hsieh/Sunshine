@@ -13,22 +13,26 @@ export class DataService {
     private urlEnd: string;
     private weatherUrlBase: string = `http://api.wunderground.com/api/${this.keys.weatherUnderground}/`;
     private locationUrlBase: string = "http://dev.virtualearth.net/REST/v1/Locations";
-    results: Place[];
+    private results: Place[];
 
     constructor(private http: Http, private jsonp: Jsonp, private geo: Geolocation) { }
 
-    private getLocationGPS() {
+    private getGPSLocation() {
         return this.geo.getCurrentPosition().then(res => {
             this.urlEnd = `/q/${res.coords.latitude},${res.coords.longitude}.json`;
         }).catch(this.errorHandler);
     }
 
-    getLocationSearch(search: string) {
+    getLocationResults(){
+        return this.results;
+    }
+
+    searchLocation(search: string) {
         let that = this;
         this.results = [];
         return this.jsonp.get(`${this.locationUrlBase}?q=${search}&key=${this.keys.bingMaps}&jsonp=JSONP_CALLBACK`)
             .toPromise().then(res => {
-                let data:any[];
+                let data: any[];
                 console.log(res.json());
                 try {
                     data = res.json().resourceSets[0].resources;
@@ -46,13 +50,13 @@ export class DataService {
                             throw new Error("Failed to get location name")
                         }
                         that.results.push({
-                            cord:{
-                                lat:place.lat,
-                                lon:place.lon
+                            cord: {
+                                lat: place.lat,
+                                lon: place.lon
                             },
-                            city:place.city,
-                            provOrState:place.state,
-                            country:place.country_name
+                            city: place.city,
+                            provOrState: place.state,
+                            country: place.country_name
                         });
                     })
                     .catch(that.errorHandler);
@@ -64,7 +68,7 @@ export class DataService {
         let that = this;
         let promise;
         if (!location) {
-            await this.getLocationGPS().then(fetchWeatherPromise);
+            await this.getGPSLocation().then(fetchWeatherPromise);
         } else {
             this.urlEnd = `/q/${location.cord.lat},${location.cord.lon}.json`;
             fetchWeatherPromise();
@@ -76,6 +80,12 @@ export class DataService {
         }
     }
 
-    private errorHandler(err) { console.log("Error: " + err) }
+    private errorHandler(err) {
+        if (err.message) {
+            console.log("Error: " + err.message);
+        }else{
+            console.log("Error: " + err);
+        }
+    }
 
 }

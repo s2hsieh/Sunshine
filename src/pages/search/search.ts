@@ -10,7 +10,7 @@ import { Place } from '../../models/IPlace';
 })
 export class SearchPage {
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     setTimeout(() => {
       this.searchbar.setFocus();
     });
@@ -24,8 +24,8 @@ export class SearchPage {
   onInput(ev) {
     let search: string = ev.target.value;
     if (search) {
-      this.data.getLocationSearch(search).then(res => {
-        this.places = this.data.results;
+      this.data.searchLocation(search).then(res => {
+        this.places = this.data.getLocationResults();
       });
     } else {
       this.places = [];
