@@ -20,7 +20,11 @@ export class DataService {
     private getGPSLocation() {
         return this.geo.getCurrentPosition().then(res => {
             this.urlEnd = `/q/${res.coords.latitude},${res.coords.longitude}.json`;
-        }).catch(this.errorHandler);
+        }).catch(err => {
+            // handle no GPS access
+            this.urlEnd = "/q/autoip.json";
+            console.log("Error: " + err);
+        });
     }
 
     getLocationResults(){
