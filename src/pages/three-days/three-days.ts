@@ -16,7 +16,7 @@ export class ThreeDays implements OnInit {
     this.fetchData(null);
   }
 
-  constructor(public navCtrl: NavController, param: NavParams, private data: DataService, private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
     this.search = param.data;
     // check if data was passed in
     if (!this.search.city) {
@@ -31,7 +31,7 @@ export class ThreeDays implements OnInit {
       });
       loader.present();
     }
-    this.data.getForecast("forecast", this.search).then(res => {
+    this.ds.getForecast("forecast", this.search).then(res => {
       try {
         this.forecasts = <ForecastDay[]>res.json().forecast.simpleforecast.forecastday;
       } catch (error) {

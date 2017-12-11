@@ -23,7 +23,7 @@ export class DataService {
         }).catch(err => {
             // handle no GPS access
             this.urlEnd = "/q/autoip.json";
-            console.log("Error: " + err);
+            console.log(err);
         });
     }
 

@@ -7,7 +7,7 @@ import { ForecastDay } from '../../models/IForeCastDay';
 @Component({
   templateUrl: 'ten-days.html'
 })
-export class TenDays implements OnInit{
+export class TenDays implements OnInit {
 
   forecasts: ForecastDay[];
   search: Place;
@@ -16,7 +16,7 @@ export class TenDays implements OnInit{
     this.fetchData(null);
   }
 
-  constructor(public navCtrl: NavController, param: NavParams, private data: DataService, private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
     this.search = param.data;
     // check if data was passed in
     if (!this.search.city) {
@@ -31,7 +31,7 @@ export class TenDays implements OnInit{
       });
       loader.present();
     }
-    this.data.getForecast("forecast10day", this.search).then(res => {
+    this.ds.getForecast("forecast10day", this.search).then(res => {
       try {
         this.forecasts = <ForecastDay[]>res.json().forecast.simpleforecast.forecastday;
       } catch (error) {

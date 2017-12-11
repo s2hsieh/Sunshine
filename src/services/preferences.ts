@@ -7,30 +7,36 @@ import { Place } from '../models/IPlace';
 export class PreferencesService {
 
     private places: Place[];
-    private units:Units;
-    private default: Units = {
+    private units: Units;
+    private readonly default: Units = {
         distance: "km",
         speed: "km/h",
-        pressure:"mb",
-        volume:"mm",
-        degree:"c"
+        pressure: "mb",
+        volume: "mm",
+        degree: "c"
     }
 
-    constructor(private nativeStorage:NativeStorage) {}
+    constructor(private nativeStorage: NativeStorage) { }
 
-    initialize(){
+    initialize() {
         this.nativeStorage.getItem("units").then(units => {
             this.units = <Units>units;
             console.log(this.units);
         }).catch(err => {
-            if (err.code.code == 2) {
+            if (err.code == 2) {
                 this.nativeStorage.setItem("units", this.default).then(units => {
                     this.units = units;
                     console.log("initialize preferences");
                 });
-            }else{
+            } else {
                 console.log(err);
             }
         })
+    }
+
+    getPref():Promise<Units>{
+        return this.nativeStorage.getItem("units").catch(err => {
+            console.log(err);
+        });
     }
 }
