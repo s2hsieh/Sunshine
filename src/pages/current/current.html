@@ -25,7 +25,7 @@
             <img [src]="forecast.icon_url" />
           </ion-col>
           <ion-col col-3>
-            <h1 text-center>{{getObservation("temp")}}&#8451;</h1>
+            <h1 text-center>{{getObservation(obs.temp)}}{{getDegree(units.degree)}}</h1>
           </ion-col>
         </ion-row>
         <ion-row justify-content-center>
@@ -41,12 +41,12 @@
           <ion-col col-4>
             <ion-icon name="umbrella"></ion-icon>
             <h2>Precipitation</h2>
-            <h3>{{getObservation("precip")}} {{units.volume}}</h3>
+            <h3>{{getObservation(obs.precip)}} {{units.volume}}</h3>
           </ion-col>
           <ion-col col-4>
             <ion-icon name="flag"></ion-icon>
             <h2>Wind</h2>
-            <h3>{{getObservation("wind")}} {{units.speed}} {{forecast.wind_dir}}</h3>
+            <h3>{{getObservation(obs.wind)}} {{units.speed}} {{forecast.wind_dir}}</h3>
           </ion-col>
           <ion-col col-4>
             <ion-icon name="sunny"></ion-icon>
@@ -56,12 +56,12 @@
           <ion-col col-4>
             <ion-icon name="speedometer"></ion-icon>
             <h2>Pressure</h2>
-            <h3>{{getObservation("pressure")}} {{units.pressure}}</h3>
+            <h3>{{getObservation(obs.pressure)}} {{units.pressure}}</h3>
           </ion-col>
           <ion-col col-4>
             <ion-icon name="eye"></ion-icon>
             <h2>Visibility</h2>
-            <h3>{{getObservation("visibility")}} {{units.distance}}</h3>
+            <h3>{{getObservation(obs.visibility)}} {{units.distance}}</h3>
           </ion-col>
           <ion-col col-4>
             <ion-icon name="water"></ion-icon>

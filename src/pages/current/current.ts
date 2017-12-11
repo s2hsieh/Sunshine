@@ -5,6 +5,7 @@ import { DataService } from './../../services/data';
 import { Component, OnInit } from '@angular/core';
 import { App, NavController, LoadingController, Refresher, NavParams } from 'ionic-angular';
 import { Units } from '../../models/IPref';
+import { Feature, Degree, Volume, Speed, Pressure, Distance, Observation } from '../../models/strings';
 
 @Component({
   templateUrl: 'current.html'
@@ -14,6 +15,7 @@ export class Current implements OnInit {
   forecast: CurrentObservation;
   private search: Place;
   units: Units;
+  obs = Observation;
 
   ngOnInit() {
     this.fetchData(null);
@@ -34,18 +36,27 @@ export class Current implements OnInit {
     })
   }
 
-  getObservation(observation: string) {
-    switch (observation) {
-      case "temp":
-        return this.units.degree == "c" ? this.forecast.temp_c : this.forecast.temp_f;
-      case "precip":
-        return this.units.volume == "mm" ? this.forecast.precip_1hr_metric : this.forecast.precip_1hr_in;
-      case "wind":
-        return this.units.speed == "km/h" ? this.forecast.wind_kph : this.forecast.wind_mph;
-      case "pressure":
-        return this.units.pressure == "mb" ? this.forecast.pressure_mb : this.forecast.pressure_mb;
-      case "visibility":
-        return this.units.distance == "km" ? this.forecast.visibility_km : this.forecast.visibility_mi;
+  getObservation(obs: number) {
+    switch (obs) {
+      case Observation.temp:
+        return this.units.degree == Degree.metric ? this.forecast.temp_c : this.forecast.temp_f;
+      case Observation.precip:
+        return this.units.volume == Volume.metric ? this.forecast.precip_1hr_metric : this.forecast.precip_1hr_in;
+      case Observation.wind:
+        return this.units.speed == Speed.metric ? this.forecast.wind_kph : this.forecast.wind_mph;
+      case Observation.pressure:
+        return this.units.pressure == Pressure.metric ? this.forecast.pressure_mb : this.forecast.pressure_in;
+      case Observation.visibility:
+        return this.units.distance == Distance.metric ? this.forecast.visibility_km : this.forecast.visibility_mi;
+    }
+  }
+
+  getDegree(degree:string){
+    switch (degree) {
+      case Degree.metric:
+        return String.fromCharCode(8451);
+      case Degree.imperial:
+        return String.fromCharCode(8457);
     }
   }
 
@@ -60,7 +71,7 @@ export class Current implements OnInit {
       });
       loader.present();
     }
-    this.ds.getForecast("conditions", this.search).then(res => {
+    this.ds.getForecast(Feature.now, this.search).then(res => {
       try {
         this.forecast = <CurrentObservation>res.json().current_observation;
       } catch (error) {

@@ -3,6 +3,7 @@ import { DataService } from './../../services/data';
 import { Component, OnInit } from '@angular/core';
 import { NavController, Refresher, LoadingController, NavParams } from 'ionic-angular';
 import { Place } from '../../models/IPlace';
+import { Feature } from '../../models/strings';
 
 @Component({
   templateUrl: 'three-days.html'
@@ -31,7 +32,7 @@ export class ThreeDays implements OnInit {
       });
       loader.present();
     }
-    this.ds.getForecast("forecast", this.search).then(res => {
+    this.ds.getForecast(Feature.three, this.search).then(res => {
       try {
         this.forecasts = <ForecastDay[]>res.json().forecast.simpleforecast.forecastday;
       } catch (error) {

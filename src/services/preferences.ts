@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Units } from '../models/IPref';
 import { Place } from '../models/IPlace';
+import { Distance, Speed, Pressure, Volume, Degree } from '../models/strings';
 
 @Injectable()
 export class PreferencesService {
@@ -9,11 +10,11 @@ export class PreferencesService {
     private places: Place[];
     private units: Units;
     private readonly default: Units = {
-        distance: "km",
-        speed: "km/h",
-        pressure: "mb",
-        volume: "mm",
-        degree: "c"
+        distance: Distance.metric,
+        speed: Speed.metric,
+        pressure: Pressure.metric,
+        volume: Volume.metric,
+        degree: Degree.metric
     }
 
     constructor(private nativeStorage: NativeStorage) { }
