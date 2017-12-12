@@ -10,7 +10,7 @@ import { Current } from '../pages/current/current';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { DegSymbolPipe } from './../pipes/deg-symbol/deg-symbol';
-import { UvLevelPipe } from './../pipes/uv-level';
+import { UvLevelPipe } from './../pipes/uv-level/uv-level';
 import { DataService } from './../services/data';
 import { PreferencesService } from '../services/preferences';
 
