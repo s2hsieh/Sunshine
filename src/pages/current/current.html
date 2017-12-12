@@ -28,7 +28,7 @@
             <img [src]="forecast.icon_url" />
           </ion-col>
           <ion-col col-3>
-            <h1 text-center>{{getObservation(obs.temp)}}{{getDegree(units.degree)}}</h1>
+            <h1 text-center>{{getObservation(obs.temp)}}{{units.degree|degSymbolPipe}}</h1>
           </ion-col>
         </ion-row>
         <ion-row justify-content-center>

@@ -51,15 +51,6 @@ export class Current implements OnInit {
     }
   }
 
-  getDegree(degree:string){
-    switch (degree) {
-      case Degree.metric:
-        return String.fromCharCode(8451);
-      case Degree.imperial:
-        return String.fromCharCode(8457);
-    }
-  }
-
   openSearch() {
     this.appCtrl.getRootNav().push("SearchPage");
   }

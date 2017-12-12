@@ -9,6 +9,7 @@ import { TenDays } from '../pages/ten-days/ten-days';
 import { Current } from '../pages/current/current';
 import { TabsPage } from '../pages/tabs/tabs';
 
+import { DegSymbolPipe } from './../pipes/deg-symbol/deg-symbol';
 import { UvLevelPipe } from './../pipes/uv-level';
 import { DataService } from './../services/data';
 import { PreferencesService } from '../services/preferences';
@@ -26,7 +27,8 @@ import { NativeStorage } from '@ionic-native/native-storage'
     TenDays,
     Current,
     TabsPage,
-    UvLevelPipe
+    UvLevelPipe,
+    DegSymbolPipe
   ],
   imports: [
     BrowserModule,
