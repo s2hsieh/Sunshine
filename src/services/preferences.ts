@@ -35,9 +35,15 @@ export class PreferencesService {
         })
     }
 
-    getPref():Promise<Units>{
-        return this.nativeStorage.getItem("units").catch(err => {
-            console.log(err);
-        });
+    getPref(): Promise<Units> {
+        return this.nativeStorage.getItem("units").catch(this.handleError);
+    }
+
+    setPref(save: Units) {
+        return this.nativeStorage.setItem("units", save).catch(this.handleError);
+    }
+
+    private handleError(err) {
+        console.log(err);
     }
 }

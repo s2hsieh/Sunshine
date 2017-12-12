@@ -61,7 +61,11 @@ export class Current implements OnInit {
   }
 
   openSearch() {
-    this.appCtrl.getRootNav().push("SearchPage", );
+    this.appCtrl.getRootNav().push("SearchPage");
+  }
+
+  openPref() {
+    this.appCtrl.getRootNav().push("PrefPage", this.units);
   }
 
   private fetchData(refresher: Refresher) {

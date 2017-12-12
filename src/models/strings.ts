@@ -25,8 +25,8 @@ export enum Volume{
 }
 
 export enum Degree{
-    metric = "c",
-    imperial = "f"
+    metric = "Celsius",
+    imperial = "Fahrenheit "
 }
 
 export enum Observation{
