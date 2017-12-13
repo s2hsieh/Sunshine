@@ -2,7 +2,7 @@ import { Place } from './../../models/IPlace';
 import { CurrentObservation } from './../../models/ICurrentObservation';
 import { DataService } from './../../services/data';
 import { Component, OnInit } from '@angular/core';
-import { App, NavController, LoadingController, Refresher, NavParams, Events } from 'ionic-angular';
+import { LoadingController, Refresher, NavParams, Events } from 'ionic-angular';
 import { Units } from '../../models/IPref';
 import { Feature, Degree, Volume, Speed, Pressure, Distance, Observation, EVENT } from '../../providers/strings';
 
@@ -28,7 +28,7 @@ export class Current implements OnInit {
     this.fetchData(null);
   }
 
-  constructor(private event:Events, param: NavParams, public navCtrl: NavController, private appCtrl: App, private ds: DataService, private loadingCtrl: LoadingController) {
+  constructor(private event:Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
     this.search = param.data;
     // check if data was passed in
     if (!this.search.city) {
@@ -49,14 +49,6 @@ export class Current implements OnInit {
       case Observation.visibility:
         return this.units.distance == Distance.metric ? this.forecast.visibility_km : this.forecast.visibility_mi;
     }
-  }
-
-  openSearch() {
-    this.appCtrl.getRootNav().push("SearchPage");
-  }
-
-  openPref() {
-    this.appCtrl.getRootNav().push("PrefPage", {units: this.units});
   }
 
   private fetchData(refresher: Refresher) {

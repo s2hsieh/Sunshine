@@ -1,3 +1,4 @@
+import { ComponentsModule } from './../components/components.module';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,8 +10,6 @@ import { TenDays } from '../pages/ten-days/ten-days';
 import { Current } from '../pages/current/current';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { DegSymbolPipe } from './../pipes/deg-symbol/deg-symbol';
-import { UvLevelPipe } from './../pipes/uv-level/uv-level';
 import { DataService } from './../services/data';
 import { PreferencesService } from '../services/preferences';
 
@@ -18,7 +17,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation'
 import { NativeStorage } from '@ionic-native/native-storage'
-import { ForecastListComponent } from '../components/forecast-list/forecast-list';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 @NgModule({
@@ -27,15 +26,14 @@ import { ForecastListComponent } from '../components/forecast-list/forecast-list
     ThreeDays,
     TenDays,
     Current,
-    TabsPage,
-    UvLevelPipe,
-    DegSymbolPipe,
-    ForecastListComponent
+    TabsPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
     JsonpModule,
+    PipesModule,
+    ComponentsModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
