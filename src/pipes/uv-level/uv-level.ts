@@ -1,37 +1,28 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-/**
- * Generated class for the UvLevelPipe pipe.
- *
- * See https://angular.io/api/core/Pipe for more info on Angular Pipes.
- */
 @Pipe({
   name: 'uvLevel',
 })
 export class UvLevelPipe implements PipeTransform {
-  /**
-   * Takes a value and makes it lowercase.
-   */
   transform(value: string) {
-    switch (value) {
-      case "0":
-      case "1":
-      case "2":
-        return "Low";
-      case "3":
-      case "4":
-      case "5":
-        return "Moderate";
-      case "6":
-      case "7":
-        return "High";
-      case "8":
-      case "9":
-      case "10":
-        return "Very High";
-      case "11":
-      default:
-        return "Extreme";
+    let level;
+    try {
+      level = Number.parseInt(value);
+    } catch (err) {
+      return "no data"
+    }
+    if (level >= 11) {
+      return "Extreme";
+    } else if (level >= 8) {
+      return "Very High";
+    } else if (level >= 6) {
+      return "High";
+    } else if (level >= 3) {
+      return "Moderate";
+    } else if (level >= 0) {
+      return "Low";
+    } else {
+      return "no data";
     }
   }
 }
