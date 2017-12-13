@@ -20,7 +20,7 @@ export enum Pressure{
 }
 
 export enum Volume{
-    metric = "mm",
+    metric = "cm",
     imperial = "in"
 }
 
@@ -35,4 +35,9 @@ export enum Observation{
     precip,
     pressure,
     visibility
+}
+
+export enum EVENT{
+    init = "initialized preferences",
+    change = "changed preferences"
 }

@@ -1,11 +1,10 @@
-import { PreferencesService } from './../../services/preferences';
 import { Place } from './../../models/IPlace';
 import { CurrentObservation } from './../../models/ICurrentObservation';
 import { DataService } from './../../services/data';
 import { Component, OnInit } from '@angular/core';
-import { App, NavController, LoadingController, Refresher, NavParams } from 'ionic-angular';
+import { App, NavController, LoadingController, Refresher, NavParams, Events } from 'ionic-angular';
 import { Units } from '../../models/IPref';
-import { Feature, Degree, Volume, Speed, Pressure, Distance, Observation } from '../../models/strings';
+import { Feature, Degree, Volume, Speed, Pressure, Distance, Observation, EVENT } from '../../models/strings';
 
 @Component({
   templateUrl: 'current.html'
@@ -18,22 +17,17 @@ export class Current implements OnInit {
   obs = Observation;
 
   ngOnInit() {
+    this.event.subscribe(EVENT.init, (units) => {this.units = units});
+    this.event.subscribe(EVENT.change, (units) => {this.units = units});
     this.fetchData(null);
   }
 
-  constructor(private ps: PreferencesService, param: NavParams, public navCtrl: NavController, private appCtrl: App, private ds: DataService, private loadingCtrl: LoadingController) {
+  constructor(private event:Events, param: NavParams, public navCtrl: NavController, private appCtrl: App, private ds: DataService, private loadingCtrl: LoadingController) {
     this.search = param.data;
     // check if data was passed in
     if (!this.search.city) {
       this.search = undefined;
     }
-  }
-
-  ionViewDidEnter() {
-    this.ps.getPref().then(units => {
-      this.units = units;
-      console.log("fetched preferences");
-    })
   }
 
   getObservation(obs: number) {
@@ -56,7 +50,7 @@ export class Current implements OnInit {
   }
 
   openPref() {
-    this.appCtrl.getRootNav().push("PrefPage", this.units);
+    this.appCtrl.getRootNav().push("PrefPage", {units: this.units});
   }
 
   private fetchData(refresher: Refresher) {
@@ -79,4 +73,5 @@ export class Current implements OnInit {
       refresher ? refresher.complete() : loader.dismiss();
     });
   }
+
 }

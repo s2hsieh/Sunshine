@@ -8,39 +8,39 @@
 
 
 <ion-content padding>
-  <ion-list *ngIf="units" >
+  <ion-list *ngIf="edits" >
     <ion-list-header>units</ion-list-header>
     <ion-item >
       <ion-label>Temperature</ion-label>
-      <ion-select interface="popover" [(ngModel)]="units.degree">
+      <ion-select interface="popover" [(ngModel)]="edits.degree">
         <ion-option>{{deg.metric}}</ion-option>
         <ion-option>{{deg.imperial}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item >
       <ion-label>Precipitation</ion-label>
-      <ion-select interface="popover" [(ngModel)]="units.volume">
+      <ion-select interface="popover" [(ngModel)]="edits.volume">
         <ion-option>{{vol.metric}}</ion-option>
         <ion-option>{{vol.imperial}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item >
         <ion-label>Wind Speed</ion-label>
-        <ion-select interface="popover" [(ngModel)]="units.speed">
+        <ion-select interface="popover" [(ngModel)]="edits.speed">
           <ion-option>{{speed.metric}}</ion-option>
           <ion-option>{{speed.imperial}}</ion-option>
         </ion-select>
       </ion-item>
     <ion-item >
       <ion-label>Visibility</ion-label>
-      <ion-select interface="popover" [(ngModel)]="units.distance">
+      <ion-select interface="popover" [(ngModel)]="edits.distance">
         <ion-option>{{dist.metric}}</ion-option>
         <ion-option>{{dist.imperial}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item >
         <ion-label>Pressure</ion-label>
-        <ion-select interface="popover" [(ngModel)]="units.pressure">
+        <ion-select interface="popover" [(ngModel)]="edits.pressure">
           <ion-option>{{press.metric}}</ion-option>
           <ion-option>{{press.imperial}}</ion-option>
         </ion-select>
