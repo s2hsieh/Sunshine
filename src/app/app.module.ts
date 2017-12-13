@@ -18,6 +18,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation'
 import { NativeStorage } from '@ionic-native/native-storage'
+import { ForecastListComponent } from '../components/forecast-list/forecast-list';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { NativeStorage } from '@ionic-native/native-storage'
     Current,
     TabsPage,
     UvLevelPipe,
-    DegSymbolPipe
+    DegSymbolPipe,
+    ForecastListComponent
   ],
   imports: [
     BrowserModule,

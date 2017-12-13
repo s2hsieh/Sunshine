@@ -1,9 +1,9 @@
 <ion-header>
   <ion-navbar>
-    <ion-title *ngIf="search" >
+    <ion-title *ngIf="search">
       Next Week for {{search.city}}
     </ion-title>
-    <ion-title *ngIf="!search" >
+    <ion-title *ngIf="!search">
       Next Week
     </ion-title>
   </ion-navbar>
@@ -11,39 +11,10 @@
 
 <ion-content>
 
-    <ion-refresher (ionRefresh)="fetchData($event)">
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>
-    
-      <ion-list *ngIf="forecasts">
-        <ion-item *ngFor="let day of forecasts">
-          <h1>{{day.period == 1 ? "Today" : day.date.weekday}}</h1>
-          <ion-row>
-            <ion-col col-3 text-center>
-              <img [src]="day.icon_url" />
-            </ion-col>
-            <ion-col col-6>
-              <h2>{{day.conditions}}</h2>
-            </ion-col>
-            <ion-col col-3>
-              <h2>
-                <ion-icon name="thermometer"></ion-icon> {{day.high.celsius}}&#8451; | {{day.low.celsius}}&#8451;</h2>
-            </ion-col>
+  <ion-refresher (ionRefresh)="fetchData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-            <ion-col col-4>
-              <h2>
-                <ion-icon name="umbrella"></ion-icon> {{day.qpf_allday.mm}} mm</h2>
-            </ion-col>
-            <ion-col col-4>
-              <h2 text-center>
-                <ion-icon name="flag"></ion-icon> {{day.avewind.kph}} km/h {{day.avewind.dir}}</h2>
-            </ion-col>
-            <ion-col col-4>
-              <h2 text-right>
-                <ion-icon name="water"></ion-icon> {{day.avehumidity}} %</h2>
-            </ion-col>
-          </ion-row>
-        </ion-item>
-      </ion-list>
-  
+  <forecast-list *ngIf="forecasts" [forecasts]="forecasts"></forecast-list>
+
 </ion-content>

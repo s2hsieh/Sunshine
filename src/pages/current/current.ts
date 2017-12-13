@@ -17,8 +17,14 @@ export class Current implements OnInit {
   obs = Observation;
 
   ngOnInit() {
-    this.event.subscribe(EVENT.init, (units) => {this.units = units});
-    this.event.subscribe(EVENT.change, (units) => {this.units = units});
+    this.event.subscribe(EVENT.init, (units) => {
+      this.units = units;
+      console.log(units);
+    });
+    this.event.subscribe(EVENT.change, (units) => {
+      this.units = units;
+      console.log(units);
+    });
     this.fetchData(null);
   }
 
