@@ -3,7 +3,7 @@ import { DataService } from './../../services/data';
 import { Component, OnInit } from '@angular/core';
 import { NavController, Refresher, LoadingController, NavParams } from 'ionic-angular';
 import { Place } from '../../models/IPlace';
-import { Feature } from '../../models/strings';
+import { Feature } from '../../providers/strings';
 
 @Component({
   templateUrl: 'three-days.html'

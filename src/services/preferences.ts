@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Units } from '../models/IPref';
-import { Distance, Speed, Pressure, Volume, Degree, EVENT } from '../models/strings';
+import { Distance, Speed, Pressure, Volume, Degree, EVENT } from '../providers/strings';
 import { Events } from 'ionic-angular/util/events';
 
 @Injectable()

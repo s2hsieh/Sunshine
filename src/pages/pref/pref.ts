@@ -1,4 +1,4 @@
-import { Volume, Degree, Speed, Distance, Pressure, EVENT } from './../../models/strings';
+import { Volume, Degree, Speed, Distance, Pressure, EVENT } from './../../providers/strings';
 import { PreferencesService } from './../../services/preferences';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';

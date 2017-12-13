@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Degree } from '../../models/strings';
+import { Degree } from '../../providers/strings';
 
 @Pipe({
   name: 'degSymbolPipe',

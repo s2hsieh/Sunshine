@@ -4,7 +4,7 @@ import { DataService } from './../../services/data';
 import { Component, OnInit } from '@angular/core';
 import { App, NavController, LoadingController, Refresher, NavParams, Events } from 'ionic-angular';
 import { Units } from '../../models/IPref';
-import { Feature, Degree, Volume, Speed, Pressure, Distance, Observation, EVENT } from '../../models/strings';
+import { Feature, Degree, Volume, Speed, Pressure, Distance, Observation, EVENT } from '../../providers/strings';
 
 @Component({
   templateUrl: 'current.html'

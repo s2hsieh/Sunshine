@@ -3,7 +3,7 @@ import { NavController, Refresher, NavParams, LoadingController } from 'ionic-an
 import { Place } from '../../models/IPlace';
 import { DataService } from '../../services/data';
 import { ForecastDay } from '../../models/IForeCastDay';
-import { Feature } from '../../models/strings';
+import { Feature } from '../../providers/strings';
 
 @Component({
   templateUrl: 'ten-days.html'
