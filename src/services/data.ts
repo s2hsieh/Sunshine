@@ -34,7 +34,7 @@ export class DataService {
     searchLocation(search: string) {
         let that = this;
         this.results = [];
-        return this.jsonp.get(`${this.locationUrlBase}?q=${search}&key=${this.keys.bingMaps}&jsonp=JSONP_CALLBACK`)
+        this.jsonp.get(`${this.locationUrlBase}?q=${search}&key=${this.keys.bingMaps}&jsonp=JSONP_CALLBACK`)
             .toPromise().then(res => {
                 let data: any[];
                 console.log(res.json());
@@ -53,15 +53,13 @@ export class DataService {
                         } catch (error) {
                             throw new Error("Failed to get location name")
                         }
-                        that.results.push({
-                            cord: {
-                                lat: place.lat,
-                                lon: place.lon
-                            },
-                            city: place.city,
-                            provOrState: place.state,
-                            country: place.country_name
-                        });
+                        place = new Place({
+                            lat: place.lat,
+                            lon: place.lon
+                        }, place.city, place.state, place.country_name);
+                        if (that.results.findIndex(v => place.toString() == v.toString()) < 0) {
+                            that.results.push(place);
+                        }
                     })
                     .catch(that.errorHandler);
                 });

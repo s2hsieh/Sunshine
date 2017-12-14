@@ -24,9 +24,8 @@ export class SearchPage {
   onInput(ev) {
     let search: string = ev.target.value;
     if (search) {
-      this.data.searchLocation(search).then(res => {
-        this.places = this.data.getLocationResults();
-      });
+      this.data.searchLocation(search);
+      this.places = this.data.getLocationResults();
     } else {
       this.places = [];
     }
