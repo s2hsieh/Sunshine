@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Degree } from '../../providers/strings';
 
 @Pipe({
-  name: 'degSymbolPipe',
+  name: 'degSymbol',
 })
 export class DegSymbolPipe implements PipeTransform {
   transform(degree:string) {

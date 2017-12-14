@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, Refresher, NavParams, LoadingController } from 'ionic-angular';
+import { Refresher, NavParams, LoadingController, Events } from 'ionic-angular';
 import { Place } from '../../models/IPlace';
 import { DataService } from '../../services/data';
 import { ForecastDay } from '../../models/IForeCastDay';
-import { Feature } from '../../providers/strings';
+import { Feature, Observation, EVENT } from '../../providers/strings';
+import { Pref } from '../../models/IPref';
+import { PreferencesService } from '../../services/preferences';
 
 @Component({
   templateUrl: 'ten-days.html'
@@ -12,12 +14,22 @@ export class TenDays implements OnInit {
 
   forecasts: ForecastDay[];
   search: Place;
+  pref: Pref;
+  obs = Observation;
 
   ngOnInit() {
+    this.ps.getPref().then(pref => {
+      this.pref = pref;
+      console.log(pref);
+    });
+    this.event.subscribe(EVENT.change, (pref) => {
+      this.pref = pref;
+      console.log(pref);
+    });
     this.fetchData(null);
   }
 
-  constructor(public navCtrl: NavController, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
+  constructor(private ps:PreferencesService, private event:Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
     this.search = param.data;
     // check if data was passed in
     if (!this.search.city) {

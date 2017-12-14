@@ -6,6 +6,7 @@
     <ion-title *ngIf="!search">
       Next Few Days
     </ion-title>
+    <header-buttons [pref]="pref"></header-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -15,6 +16,6 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <forecast-list *ngIf="forecasts" [forecasts]="forecasts"></forecast-list>
+  <forecast-list *ngIf="forecasts && pref" [pref]="pref" [forecasts]="forecasts"></forecast-list>
 
 </ion-content>

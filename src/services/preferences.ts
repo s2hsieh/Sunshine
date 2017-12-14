@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage';
-import { Units } from '../models/IPref';
+import { Pref } from '../models/IPref';
 import { Distance, Speed, Pressure, Volume, Degree, EVENT } from '../providers/strings';
 import { Events } from 'ionic-angular/util/events';
 
 @Injectable()
 export class PreferencesService {
 
-    private readonly default: Units = {
+    private readonly default: Pref = {
         distance: Distance.metric,
         speed: Speed.metric,
         pressure: Pressure.metric,
@@ -18,13 +18,13 @@ export class PreferencesService {
     constructor(private nativeStorage: NativeStorage, private event: Events) { }
 
     initialize() {
-        this.nativeStorage.getItem("units").then(units => {
-            this.event.publish(EVENT.init, units);
+        this.nativeStorage.getItem("pref").then(pref => {
+            this.event.publish(EVENT.init, pref);
         }).catch(err => {
             if (err.code == 2 || err.code.code == 2) {
-                this.nativeStorage.setItem("units", this.default).then(units => {
+                this.nativeStorage.setItem("pref", this.default).then(pref => {
                     console.log("initialize preferences");
-                    this.event.publish(EVENT.init, units);
+                    this.event.publish(EVENT.init, pref);
                 });
             } else {
                 console.log(err);
@@ -32,12 +32,12 @@ export class PreferencesService {
         });
     }
 
-    getPref(): Promise<Units> {
-        return this.nativeStorage.getItem("units").catch(this.handleError);
+    getPref(): Promise<Pref> {
+        return this.nativeStorage.getItem("pref").catch(this.handleError);
     }
 
-    setPref(save: Units) {
-        return this.nativeStorage.setItem("units", save).catch(this.handleError);
+    setPref(save: Pref) {
+        return this.nativeStorage.setItem("pref", save).catch(this.handleError);
     }
 
     private handleError(err) {

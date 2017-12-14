@@ -1,4 +1,4 @@
-export interface Units {
+export interface Pref {
     degree: string,
     speed: string,
     volume: string,

@@ -1,4 +1,4 @@
-import { Units } from './../../models/IPref';
+import { Pref } from './../../models/IPref';
 import { Component, Input } from '@angular/core';
 import { App } from 'ionic-angular/components/app/app';
 
@@ -8,7 +8,7 @@ import { App } from 'ionic-angular/components/app/app';
 })
 export class HeaderButtonsComponent {
 
-  @Input() pref: Units;
+  @Input() pref: Pref;
 
   constructor(private appCtrl: App) { }
 
@@ -17,7 +17,7 @@ export class HeaderButtonsComponent {
   }
 
   openPref() {
-    this.appCtrl.getRootNav().push("PrefPage", { units: this.pref });
+    this.appCtrl.getRootNav().push("PrefPage", { pref: this.pref });
   }
 
 }

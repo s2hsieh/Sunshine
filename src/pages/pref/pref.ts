@@ -2,7 +2,7 @@ import { Volume, Degree, Speed, Distance, Pressure, EVENT } from './../../provid
 import { PreferencesService } from './../../services/preferences';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
-import { Units } from '../../models/IPref';
+import { Pref } from '../../models/IPref';
 
 @IonicPage()
 @Component({
@@ -11,8 +11,8 @@ import { Units } from '../../models/IPref';
 })
 export class PrefPage {
 
-  edits: Units;
-  original: Units;
+  edits: Pref;
+  original: Pref;
 
   deg = Degree;
   vol = Volume;
@@ -24,7 +24,7 @@ export class PrefPage {
   constructor(private event: Events, private ps: PreferencesService, public navCtrl: NavController, public navParams: NavParams) { }
 
   ionViewDidLoad() {
-    this.original = this.navParams.get("units");
+    this.original = this.navParams.get("pref");
     // clone origianl
     this.edits = Object.assign({}, this.original);
   }

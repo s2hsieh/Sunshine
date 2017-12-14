@@ -5,21 +5,21 @@
       <ion-col col-3 text-center>
         <img [src]="day.icon_url" />
       </ion-col>
-      <ion-col col-6>
+      <ion-col col-5>
         <h2>{{day.conditions}}</h2>
       </ion-col>
-      <ion-col col-3>
+      <ion-col col-4>
         <h2>
-          <ion-icon name="thermometer"></ion-icon> {{day.high.celsius}}&#8451; | {{day.low.celsius}}&#8451;</h2>
+          <ion-icon name="thermometer"></ion-icon> {{pref.degree == deg.metric ? day.high.celsius : day.high.fahrenheit}}{{pref.degree|degSymbol}} | {{pref.degree == deg.metric ? day.low.celsius : day.low.fahrenheit}}{{pref.degree|degSymbol}}</h2>
       </ion-col>
 
       <ion-col col-4>
         <h2>
-          <ion-icon name="umbrella"></ion-icon> {{day.qpf_allday.mm}} mm</h2>
+          <ion-icon name="umbrella"></ion-icon> {{pref.volume == vol.metric ? day.qpf_allday.mm : day.qpf_allday.in}} {{pref.volume}}</h2>
       </ion-col>
       <ion-col col-4>
         <h2 text-center>
-          <ion-icon name="flag"></ion-icon> {{day.avewind.kph}} km/h {{day.avewind.dir}}</h2>
+          <ion-icon name="flag"></ion-icon> {{pref.speed == speed.metric ? day.avewind.kph : day.avewind.mph}} {{pref.speed}} {{day.avewind.dir}}</h2>
       </ion-col>
       <ion-col col-4>
         <h2 text-right>
