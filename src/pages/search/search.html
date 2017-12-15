@@ -7,7 +7,7 @@
 <ion-content padding>
   <ion-list *ngIf="places?.length">
     <ion-item *ngFor="let place of places" (click)="openForecast(place)">
-      {{place.city + ", " + place.provOrState + ", " + place.country}}
+      {{place.toString()}}
     </ion-item>
   </ion-list>
 </ion-content>

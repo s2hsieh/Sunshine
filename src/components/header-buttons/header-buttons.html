@@ -1,7 +1,8 @@
 <ion-buttons end>
   <button *ngIf="search"  ion-button (click)="toggleAddState()">
-    <ion-icon *ngIf="!placeAdded"  name="star-outline"></ion-icon>
-    <ion-icon *ngIf="placeAdded" name="star"></ion-icon>
+    <ion-icon *ngIf="!placeAdded && !adding"  name="star-outline"></ion-icon>
+    <ion-icon *ngIf="placeAdded && !adding" name="star"></ion-icon>
+    <ion-icon *ngIf="adding"  name="refresh"></ion-icon>
   </button>
   <button ion-button (click)="openSearch()">
     <ion-icon name="search"></ion-icon>

@@ -8,6 +8,6 @@ export class Place {
     constructor(readonly cord: Cordinates, readonly city: string, readonly provOrState: string, readonly country: string) { }
 
     toString() {
-        return this.city + ", " + this.provOrState + ", " + this.country;
+        return [this.city, this.provOrState, this.country].join(", ");
     }
 }

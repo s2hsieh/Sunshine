@@ -16,6 +16,14 @@ export class Current implements OnInit {
   pref: Pref;
   obs = Observation;
 
+  constructor(private event: Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
+    this.search = param.data;
+    // check if data was passed in
+    if (!this.search.city) {
+      this.search = undefined;
+    }
+  }
+
   ngOnInit() {
     this.event.subscribe(EVENT.init, (pref) => {
       this.pref = pref;
@@ -26,14 +34,6 @@ export class Current implements OnInit {
       console.log(pref);
     });
     this.fetchData(null);
-  }
-
-  constructor(private event: Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
-    this.search = param.data;
-    // check if data was passed in
-    if (!this.search.city) {
-      this.search = undefined;
-    }
   }
 
   getObservation(obs: number) {

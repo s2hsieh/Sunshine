@@ -10,12 +10,6 @@ import { Place } from '../../models/IPlace';
 })
 export class SearchPage {
 
-  ionViewDidEnter() {
-    setTimeout(() => {
-      this.searchbar.setFocus();
-    });
-  }
-
   places: Place[];
   @ViewChild(Searchbar) searchbar: Searchbar;
 
@@ -29,6 +23,12 @@ export class SearchPage {
     } else {
       this.places = [];
     }
+  }
+
+  ionViewDidEnter() {
+    setTimeout(() => {
+      this.searchbar.setFocus();
+    });
   }
 
   openForecast(place: string) {

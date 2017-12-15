@@ -17,6 +17,14 @@ export class TenDays implements OnInit {
   pref: Pref;
   obs = Observation;
 
+  constructor(private ps:PreferencesService, private event:Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
+    this.search = param.data;
+    // check if data was passed in
+    if (!this.search.city) {
+      this.search = undefined;
+    }
+  }
+
   ngOnInit() {
     this.ps.getPref().then(pref => {
       this.pref = pref;
@@ -27,14 +35,6 @@ export class TenDays implements OnInit {
       console.log(pref);
     });
     this.fetchData(null);
-  }
-
-  constructor(private ps:PreferencesService, private event:Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
-    this.search = param.data;
-    // check if data was passed in
-    if (!this.search.city) {
-      this.search = undefined;
-    }
   }
 
   fetchData(refresher: Refresher) {

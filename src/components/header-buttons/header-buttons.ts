@@ -1,3 +1,4 @@
+import { PreferencesService } from './../../services/preferences';
 import { Place } from './../../models/IPlace';
 import { Pref } from './../../models/IPref';
 import { Component, Input, OnInit } from '@angular/core';
@@ -12,12 +13,13 @@ export class HeaderButtonsComponent implements OnInit {
   @Input() pref: Pref;
   @Input() search: Place;
   placeAdded: boolean;
+  adding = false;
 
-  constructor(private appCtrl: App) { }
+  constructor(private appCtrl: App, private ps: PreferencesService) { }
 
   ngOnInit() {
     if (this.search) {
-      this.placeAdded = !this.showAdd();
+      this.placeAdded = this.isSaved();
     }
   }
 
@@ -29,18 +31,24 @@ export class HeaderButtonsComponent implements OnInit {
     this.appCtrl.getRootNav().push("PrefPage", { pref: this.pref });
   }
 
-  private showAdd() {
-    return this.pref.locations.findIndex(v => v.toString() == this.search.toString()) < 0;
+  private isSaved() {
+    // v.toStirng() uses the one inherited form Object not  the one overiten by Place
+    return this.pref.locations.findIndex(v => [v.city, v.provOrState, v.country].join(", ") == this.search.toString()) >= 0;
   }
 
   toggleAddState() {
+    this.adding = true;
     if (this.placeAdded) {
-      this.pref.locations.filter(v => v.toString() !== this.search.toString());
-      this.placeAdded = false;
+      // remove place
+      this.pref.locations = this.pref.locations.filter(v => v.toString() !== this.search.toString());
     } else {
+      // add place
       this.pref.locations.push(this.search);
-      this.placeAdded = true;
     }
+    this.ps.setPref(this.pref).then(p => {
+      this.placeAdded = !this.placeAdded;
+      this.adding = false;
+    })
   }
 
 }
