@@ -4,28 +4,19 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'uvLevel',
 })
 export class UvLevelPipe implements PipeTransform {
-  transform(value: string) {
-    let level: number;
-    let result: string;
-    try {
-      level = Number.parseInt(value);
-      if (level >= 11) {
-        result = "Extreme";
-      } else if (level >= 8) {
-        result = "Very High";
-      } else if (level >= 6) {
-        result = "High";
-      } else if (level >= 3) {
-        result = "Moderate";
-      } else if (level >= 0) {
-        result = "Low";
-      } else {
-        result = "no data";
-      }
-    } catch (err) {
-      result = "no data"
+  transform(value: string | number) {
+    if (value >= 11) {
+      return "Extreme";
+    } else if (value >= 8) {
+      return "Very High";
+    } else if (value >= 6) {
+      return "High";
+    } else if (value >= 3) {
+      return "Moderate";
+    } else if (value >= 0) {
+      return "Low";
+    } else {
+      return "no data";
     }
-    
-    return result;
   }
 }
