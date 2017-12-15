@@ -3,7 +3,7 @@
     <ion-title *ngIf="forecast" >
       {{forecast.display_location.city}}
     </ion-title>
-    <header-buttons [pref]="pref"></header-buttons>
+    <header-buttons *ngIf="forecast"  [search]="search" [pref]="pref"></header-buttons>
   </ion-navbar>
 </ion-header>
 

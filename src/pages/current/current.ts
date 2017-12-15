@@ -12,7 +12,7 @@ import { Feature, Degree, Volume, Speed, Pressure, Distance, Observation, EVENT 
 export class Current implements OnInit {
 
   forecast: CurrentObservation;
-  private search: Place;
+  search: Place;
   pref: Pref;
   obs = Observation;
 
@@ -28,7 +28,7 @@ export class Current implements OnInit {
     this.fetchData(null);
   }
 
-  constructor(private event:Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
+  constructor(private event: Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
     this.search = param.data;
     // check if data was passed in
     if (!this.search.city) {
@@ -65,6 +65,8 @@ export class Current implements OnInit {
         throw new Error("Failed to fetch data from API");
       }
       console.log(this.forecast);
+      let loc = this.forecast.display_location;
+      this.search = new Place({ lat: loc.latitude, lon: loc.longitude }, loc.city, loc.state, loc.country_iso3166);
       refresher ? refresher.complete() : loader.dismiss();
     }).catch(err => {
       console.log(err);

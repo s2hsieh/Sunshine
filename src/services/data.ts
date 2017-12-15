@@ -53,10 +53,7 @@ export class DataService {
                         } catch (error) {
                             throw new Error("Failed to get location name")
                         }
-                        place = new Place({
-                            lat: place.lat,
-                            lon: place.lon
-                        }, place.city, place.state, place.country_name);
+                        place = new Place({lat: place.lat, lon: place.lon}, place.city, place.state, place.country_iso3166);
                         if (that.results.findIndex(v => place.toString() == v.toString()) < 0) {
                             that.results.push(place);
                         }

@@ -12,7 +12,8 @@ export class PreferencesService {
         speed: Speed.metric,
         pressure: Pressure.metric,
         volume: Volume.metric,
-        degree: Degree.metric
+        degree: Degree.metric,
+        locations: []
     }
 
     constructor(private nativeStorage: NativeStorage, private event: Events) { }
