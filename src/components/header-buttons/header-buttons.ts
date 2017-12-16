@@ -3,6 +3,7 @@ import { Place } from './../../models/IPlace';
 import { Pref } from './../../models/IPref';
 import { Component, Input, OnInit } from '@angular/core';
 import { App } from 'ionic-angular/components/app/app';
+import { TabsPage } from '../../pages/tabs/tabs';
 
 @Component({
   selector: 'header-buttons',
@@ -17,6 +18,7 @@ export class HeaderButtonsComponent implements OnInit {
   constructor(private appCtrl: App, private ps: PreferencesService) { }
 
   ngOnInit() {
+    this.pref.locations = this.pref.locations.map(v => new Place(v.cord, v.city, v.provOrState, v.country));
     if (this.search) {
       this.placeAdded = this.isSaved();
     }
@@ -30,14 +32,18 @@ export class HeaderButtonsComponent implements OnInit {
     this.appCtrl.getRootNav().push("PrefPage", { pref: this.pref });
   }
 
+  openForecast(place: string) {
+    // this.appCtrl.getRootNav().setRoot(TabsPage, { place: place });
+  }
+
   private isSaved() {
-    return this.pref.locations.findIndex(v => this.overrideToString(v) == this.search.toString()) >= 0;
+    return this.pref.locations.findIndex(v => v.toString() == this.search.toString()) >= 0;
   }
 
   toggleAddState() {
     if (this.placeAdded) {
       // remove place
-      this.pref.locations = this.pref.locations.filter(v => this.overrideToString(v) !== this.search.toString());
+      this.pref.locations = this.pref.locations.filter(v => v.toString() !== this.search.toString());
     } else {
       // add place
       this.pref.locations.push(this.search);
@@ -47,9 +53,8 @@ export class HeaderButtonsComponent implements OnInit {
     });
   }
 
-  // v.toStirng() uses the one inherited form Object not  the one overriten in Place
-  private overrideToString(v: Place) {
-    return [v.city, v.provOrState, v.country].join(", ");
+  compare(p1: Place, p2: Place) {
+    return p1 && p2 ? p1.toString() == p2.toString() : p1 == p2;
   }
 
 }
