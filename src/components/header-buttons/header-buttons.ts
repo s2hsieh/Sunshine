@@ -4,6 +4,8 @@ import { Pref } from './../../models/IPref';
 import { Component, Input, OnInit } from '@angular/core';
 import { App } from 'ionic-angular/components/app/app';
 import { TabsPage } from '../../pages/tabs/tabs';
+import { Events } from 'ionic-angular';
+import { EVENT } from '../../providers/strings';
 
 @Component({
   selector: 'header-buttons',
@@ -15,10 +17,13 @@ export class HeaderButtonsComponent implements OnInit {
   @Input() search: Place;
   placeAdded: boolean;
 
-  constructor(private appCtrl: App, private ps: PreferencesService) { }
+  constructor(private event: Events, private appCtrl: App, private ps: PreferencesService) { }
 
   ngOnInit() {
+    // my custom toString is missing after passing through @Input, hence recreate the objects as the Place class again
     this.pref.locations = this.pref.locations.map(v => new Place(v.cord, v.city, v.provOrState, v.country));
+    console.log(this.pref.locations);
+    
     if (this.search) {
       this.placeAdded = this.isSaved();
     }
@@ -32,8 +37,8 @@ export class HeaderButtonsComponent implements OnInit {
     this.appCtrl.getRootNav().push("PrefPage", { pref: this.pref });
   }
 
-  openForecast(place: string) {
-    // this.appCtrl.getRootNav().setRoot(TabsPage, { place: place });
+  openForecast(place: Place) {
+    this.appCtrl.getRootNav().push(TabsPage, { place: place });
   }
 
   private isSaved() {
@@ -50,6 +55,7 @@ export class HeaderButtonsComponent implements OnInit {
     }
     this.ps.setPref(this.pref).then(p => {
       this.placeAdded = !this.placeAdded;
+      this.event.publish(EVENT.change, this.pref);
     });
   }
 

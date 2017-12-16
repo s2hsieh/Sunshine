@@ -1,6 +1,6 @@
 <ion-toolbar>
-<ion-select *ngIf="pref.locations.length > 0 && search" [(ngModel)]="search" [compareWith]="compare" placeholder="Current Location" interface="popover">
-  <ion-option *ngFor="let place of pref.locations" (click)="openForecast(place)" [value]="place">{{place.city}}</ion-option>
+<ion-select *ngIf="pref.locations.length > 0 && search" [(ngModel)]="search" [compareWith]="compare" placeholder="Saved Locations" interface="popover">
+  <ion-option *ngFor="let place of pref.locations" (ionSelect)="openForecast(place)" [value]="place">{{place.city}}</ion-option>
 </ion-select>
 <ion-buttons end>
   <button *ngIf="search" ion-button (click)="toggleAddState()">
