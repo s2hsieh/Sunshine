@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Next Week</ion-title>
-    <header-buttons *ngIf="pref" [search]="search" [pref]="pref"></header-buttons>
+    <header-buttons *ngIf="pref && search" [search]="search" [pref]="pref"></header-buttons>
   </ion-navbar>
 </ion-header>
 

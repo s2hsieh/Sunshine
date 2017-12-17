@@ -1,5 +1,5 @@
 <ion-toolbar>
-  <ion-select *ngIf="pref.locations.length > 0 && search" [(ngModel)]="search" [compareWith]="compare" interface="popover">
+  <ion-select [(ngModel)]="search" [compareWith]="compare" interface="popover">
     <ion-option *ngIf="!search.isGPS" (ionSelect)="openForecast(null)">
       Current Location
     </ion-option>
