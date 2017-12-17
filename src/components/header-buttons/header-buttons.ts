@@ -15,18 +15,18 @@ export class HeaderButtonsComponent implements OnInit {
 
   @Input() pref: Pref;
   @Input() search: Place;
+  private here: Place;
   placeAdded: boolean;
 
   constructor(private event: Events, private appCtrl: App, private ps: PreferencesService) { }
 
   ngOnInit() {
     // my custom toString is missing after passing through @Input, hence recreate the objects as the Place class again
-    this.pref.locations = this.pref.locations.map(v => new Place(v.cord, v.city, v.provOrState, v.country));
-    console.log(this.pref.locations);
-    
-    if (this.search) {
-      this.placeAdded = this.isSaved();
-    }
+    this.pref.locations = this.pref.locations.map(v => new Place(v.cord, v.city, v.provOrState, v.country))
+    console.log(this.pref);
+    this.here = this.search.clone();
+    this.placeAdded = this.isSaved();
+
   }
 
   openSearch() {
@@ -38,10 +38,10 @@ export class HeaderButtonsComponent implements OnInit {
   }
 
   openForecast(place: Place) {
-    if (place) {
-      this.appCtrl.getRootNav().push(TabsPage, { place: place });
-    }else{
+    if (!place) {
       this.appCtrl.getRootNav().push(TabsPage);
+    } else if (this.here.toString() != place.toString()) {
+      this.appCtrl.getRootNav().push(TabsPage, { place: place });
     }
   }
 
@@ -55,7 +55,12 @@ export class HeaderButtonsComponent implements OnInit {
       this.pref.locations = this.pref.locations.filter(v => v.toString() !== this.search.toString());
     } else {
       // add place
-      this.pref.locations.push(this.search);
+      if (this.search.isGPS) {
+        let save = new Place(this.search.cord, this.search.city, this.search.provOrState, this.search.country);
+        this.pref.locations.push(save);
+      } else {
+        this.pref.locations.push(this.search);
+      }
     }
     this.ps.setPref(this.pref).then(p => {
       this.placeAdded = !this.placeAdded;

@@ -10,4 +10,8 @@ export class Place {
     toString() {
         return [this.city, this.provOrState, this.country].join(", ");
     }
+
+    clone(){
+        return new Place(this.cord, this.city, this.provOrState, this.country, this.isGPS);
+    }
 }

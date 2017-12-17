@@ -1,13 +1,13 @@
 <ion-toolbar>
   <ion-select *ngIf="pref.locations.length > 0 && search" [(ngModel)]="search" [compareWith]="compare" interface="popover">
-    <ion-option *ngIf="!search.isGPS" [value]="null" (ionSelect)="openForecast(null)">
-      <h1>Current Location</h1>
+    <ion-option *ngIf="!search.isGPS" (ionSelect)="openForecast(null)">
+      Current Location
     </ion-option>
     <ion-option *ngIf="!placeAdded" [value]="search">
-      <h1>{{search.city}}</h1>
+      {{search.city}}
     </ion-option>
     <ion-option *ngFor="let place of pref.locations" (ionSelect)="openForecast(place)" [value]="place">
-      <h1>{{place.city}}</h1>
+      {{place.city}}
     </ion-option>
   </ion-select>
   <ion-buttons end>
