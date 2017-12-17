@@ -1,18 +1,25 @@
 <ion-toolbar>
-<ion-select *ngIf="pref.locations.length > 0 && search" [(ngModel)]="search" [compareWith]="compare" interface="popover">
-  <ion-option *ngIf="!placeAdded" [value]="search"><h1>{{search.city}}</h1></ion-option>
-  <ion-option *ngFor="let place of pref.locations" (ionSelect)="openForecast(place)" [value]="place"><h1>{{place.city}}</h1></ion-option>
-</ion-select>
-<ion-buttons end>
-  <button *ngIf="search" ion-button (click)="toggleAddState()">
-    <ion-icon *ngIf="!placeAdded" name="star-outline"></ion-icon>
-    <ion-icon *ngIf="placeAdded" name="star"></ion-icon>
-  </button>
-  <button ion-button (click)="openSearch()">
-    <ion-icon name="search"></ion-icon>
-  </button>
-  <button ion-button (click)="openPref()">
-    <ion-icon name="settings"></ion-icon>
-  </button>
-</ion-buttons>
+  <ion-select *ngIf="pref.locations.length > 0 && search" [(ngModel)]="search" [compareWith]="compare" interface="popover">
+    <ion-option *ngIf="!search.isGPS" [value]="null" (ionSelect)="openForecast(null)">
+      <h1>Current Location</h1>
+    </ion-option>
+    <ion-option *ngIf="!placeAdded" [value]="search">
+      <h1>{{search.city}}</h1>
+    </ion-option>
+    <ion-option *ngFor="let place of pref.locations" (ionSelect)="openForecast(place)" [value]="place">
+      <h1>{{place.city}}</h1>
+    </ion-option>
+  </ion-select>
+  <ion-buttons end>
+    <button *ngIf="search" ion-button (click)="toggleAddState()">
+      <ion-icon *ngIf="!placeAdded" name="star-outline"></ion-icon>
+      <ion-icon *ngIf="placeAdded" name="star"></ion-icon>
+    </button>
+    <button ion-button (click)="openSearch()">
+      <ion-icon name="search"></ion-icon>
+    </button>
+    <button ion-button (click)="openPref()">
+      <ion-icon name="settings"></ion-icon>
+    </button>
+  </ion-buttons>
 </ion-toolbar>

@@ -38,7 +38,11 @@ export class HeaderButtonsComponent implements OnInit {
   }
 
   openForecast(place: Place) {
-    this.appCtrl.getRootNav().push(TabsPage, { place: place });
+    if (place) {
+      this.appCtrl.getRootNav().push(TabsPage, { place: place });
+    }else{
+      this.appCtrl.getRootNav().push(TabsPage);
+    }
   }
 
   private isSaved() {

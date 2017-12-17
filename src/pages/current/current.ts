@@ -67,7 +67,7 @@ export class Current implements OnInit {
       console.log(this.forecast);
       if (!this.search) {
         let loc = this.forecast.display_location;
-        this.search = new Place({ lat: loc.latitude, lon: loc.longitude }, loc.city, loc.state, loc.country_iso3166);
+        this.search = new Place({ lat: loc.latitude, lon: loc.longitude }, loc.city, loc.state, loc.country_iso3166, true);
         this.event.publish(EVENT.gps, this.search);
       }
       refresher ? refresher.complete() : loader.dismiss();
