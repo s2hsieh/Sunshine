@@ -1,8 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title *ngIf="forecast" >
-      {{forecast.display_location.city}}
-    </ion-title>
+    <ion-title>Current</ion-title>
     <header-buttons *ngIf="search && pref"  [search]="search" [pref]="pref"></header-buttons>
   </ion-navbar>
 </ion-header>

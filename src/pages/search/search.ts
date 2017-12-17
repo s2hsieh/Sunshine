@@ -31,7 +31,7 @@ export class SearchPage {
     });
   }
 
-  openForecast(place: string) {
+  openForecast(place: Place) {
     this.navCtrl.push(TabsPage, { place: place });
   }
 }

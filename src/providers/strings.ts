@@ -39,5 +39,6 @@ export enum Observation{
 
 export enum EVENT{
     init = "initialized preferences",
-    change = "changed preferences"
+    change = "changed preferences",
+    gps = "GPS location"
 }

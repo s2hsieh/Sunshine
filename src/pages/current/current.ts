@@ -65,8 +65,11 @@ export class Current implements OnInit {
         throw new Error("Failed to fetch data from API");
       }
       console.log(this.forecast);
-      let loc = this.forecast.display_location;
-      this.search = new Place({ lat: loc.latitude, lon: loc.longitude }, loc.city, loc.state, loc.country_iso3166);
+      if (!this.search) {
+        let loc = this.forecast.display_location;
+        this.search = new Place({ lat: loc.latitude, lon: loc.longitude }, loc.city, loc.state, loc.country_iso3166);
+        this.event.publish(EVENT.gps, this.search);
+      }
       refresher ? refresher.complete() : loader.dismiss();
     }).catch(err => {
       console.log(err);
