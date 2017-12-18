@@ -23,7 +23,7 @@ export class HeaderButtonsComponent implements OnInit {
   ngOnInit() {
     // my custom toString is missing after passing through @Input, hence recreate the objects as the Place class again
     this.pref.locations = this.pref.locations.map(v => new Place(v.cord, v.city, v.provOrState, v.country))
-    console.log(this.pref);
+    console.log(this.pref.locations);
     this.here = this.search.clone();
     this.placeAdded = this.isSaved();
 
