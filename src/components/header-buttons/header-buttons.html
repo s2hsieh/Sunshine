@@ -1,15 +1,5 @@
 <ion-toolbar>
-  <ion-select [(ngModel)]="search" [compareWith]="compare" interface="popover">
-    <ion-option *ngIf="!search.isGPS" (ionSelect)="openForecast(null)">
-      Current Location
-    </ion-option>
-    <ion-option *ngIf="!placeAdded" [value]="search">
-      {{search.city}}
-    </ion-option>
-    <ion-option *ngFor="let place of pref.locations" (ionSelect)="openForecast(place)" [value]="place">
-      {{place.city}}
-    </ion-option>
-  </ion-select>
+  <ion-label (click)="openSavedList($event)" > {{search.city}} <ion-icon name="arrow-dropdown"></ion-icon> </ion-label>
   <ion-buttons end>
     <button *ngIf="search" ion-button (click)="toggleAddState()">
       <ion-icon *ngIf="!placeAdded" name="star-outline"></ion-icon>

@@ -3,9 +3,9 @@ import { Place } from './../../models/IPlace';
 import { Pref } from './../../models/IPref';
 import { Component, Input, OnInit } from '@angular/core';
 import { App } from 'ionic-angular/components/app/app';
-import { TabsPage } from '../../pages/tabs/tabs';
-import { Events } from 'ionic-angular';
+import { Events, PopoverController } from 'ionic-angular';
 import { EVENT } from '../../providers/strings';
+import { LocationSelectComponent } from '../location-select/location-select';
 
 @Component({
   selector: 'header-buttons',
@@ -15,18 +15,22 @@ export class HeaderButtonsComponent implements OnInit {
 
   @Input() pref: Pref;
   @Input() search: Place;
-  private here: Place;
   placeAdded: boolean;
 
-  constructor(private event: Events, private appCtrl: App, private ps: PreferencesService) { }
+  constructor(private popOverCrl: PopoverController, private event: Events, private appCtrl: App, private ps: PreferencesService) { }
 
   ngOnInit() {
     // my custom toString is missing after passing through @Input, hence recreate the objects as the Place class again
     this.pref.locations = this.pref.locations.map(v => new Place(v.cord, v.city, v.provOrState, v.country))
     console.log(this.pref.locations);
-    this.here = this.search.clone();
     this.placeAdded = this.isSaved();
 
+  }
+
+  openSavedList(ev) {
+    let data = { locations: this.pref.locations, search: this.search, isSaved: this.placeAdded }
+    let list = this.popOverCrl.create(LocationSelectComponent, data);
+    list.present({ ev: ev });
   }
 
   openSearch() {
@@ -35,14 +39,6 @@ export class HeaderButtonsComponent implements OnInit {
 
   openPref() {
     this.appCtrl.getRootNav().push("PrefPage", { pref: this.pref });
-  }
-
-  openForecast(place: Place) {
-    if (!place) {
-      this.appCtrl.getRootNav().push(TabsPage);
-    } else if (this.here.toString() != place.toString()) {
-      this.appCtrl.getRootNav().push(TabsPage, { place: place });
-    }
   }
 
   private isSaved() {
@@ -66,10 +62,6 @@ export class HeaderButtonsComponent implements OnInit {
       this.placeAdded = !this.placeAdded;
       this.event.publish(EVENT.change, this.pref);
     });
-  }
-
-  compare(p1: Place, p2: Place) {
-    return p1 && p2 ? p1.toString() == p2.toString() : p1 == p2;
   }
 
 }
