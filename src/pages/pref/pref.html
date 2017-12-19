@@ -50,7 +50,7 @@
     <ion-item>
       <ion-label>Icons</ion-label>
       <ion-select interface="alert" [(ngModel)]="edits.icon">
-        <ion-option *ngFor="let setNum of iconSet" [value]="setNum + 1">Set: {{setNum + 1}}</ion-option>
+        <ion-option *ngFor="let setNum of iconSet" [value]="setNum">Set: {{setNum - 8}}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
