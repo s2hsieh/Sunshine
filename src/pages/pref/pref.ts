@@ -1,4 +1,4 @@
-import { Volume, Degree, Speed, Distance, Pressure, EVENT } from './../../providers/strings';
+import { Volume, Degree, Speed, Distance, Pressure, EVENT, IconSetList } from './../../providers/strings';
 import { PreferencesService } from './../../services/preferences';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
@@ -13,6 +13,7 @@ export class PrefPage {
 
   edits: Pref;
   original: Pref;
+  readonly iconSet: number[] = IconSetList;
 
   deg = Degree;
   vol = Volume;
@@ -32,6 +33,7 @@ export class PrefPage {
   ionViewWillLeave() {
     if (!Object.is(this.original, this.edits)) {
       this.ps.setPref(this.edits).then(r => {
+        // destory original before sending changes
         this.original = this.edits;
         this.event.publish(EVENT.change, this.edits);
         console.log("saved preferences");

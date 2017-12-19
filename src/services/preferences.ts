@@ -13,7 +13,8 @@ export class PreferencesService {
         pressure: Pressure.metric,
         volume: Volume.metric,
         degree: Degree.metric,
-        locations: []
+        locations: [],
+        icon: 11
     }
 
     constructor(private nativeStorage: NativeStorage, private event: Events) { }

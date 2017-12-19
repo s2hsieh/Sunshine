@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Current</ion-title>
-    <header-buttons *ngIf="search && pref"  [search]="search" [pref]="pref"></header-buttons>
+    <header-buttons *ngIf="search && pref" [search]="search" [pref]="pref"></header-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
       <ion-grid>
         <ion-row align-items-center justify-content-center>
           <ion-col col-3>
-            <img [src]="forecast.icon_url" />
+            <img [src]="forecast.icon_url|iconSet:pref.icon" />
           </ion-col>
           <ion-col col-3>
             <h1 text-center>{{getObservation(obs.temp)}}{{pref.degree|degSymbol}}</h1>

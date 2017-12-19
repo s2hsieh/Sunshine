@@ -6,5 +6,6 @@ export interface Pref {
     volume: string,
     pressure: string,
     distance: string,
-    locations: Place[]
+    locations: Place[],
+    icon: number
 }

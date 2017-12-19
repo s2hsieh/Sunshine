@@ -3,7 +3,7 @@
     <h1>{{day.period == 1 ? "Today" : day.date.weekday}}</h1>
     <ion-row>
       <ion-col col-3 text-center>
-        <img [src]="day.icon_url" />
+        <img [src]="day.icon_url|iconSet:pref.icon" />
       </ion-col>
       <ion-col col-5>
         <h2>{{day.conditions}}</h2>
@@ -23,7 +23,7 @@
       </ion-col>
       <ion-col col-4>
         <h2 text-right>
-          <ion-icon name="water"></ion-icon> {{day.avehumidity}} %</h2>
+          <ion-icon name="water"></ion-icon> {{day.avehumidity|percent}}</h2>
       </ion-col>
     </ion-row>
   </ion-item>
