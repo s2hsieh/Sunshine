@@ -48,10 +48,17 @@
 
     <ion-list-header>Icon Set</ion-list-header>
     <ion-item>
-      <ion-label>Icons</ion-label>
-      <ion-select interface="alert" [(ngModel)]="edits.icon">
-        <ion-option *ngFor="let setNum of iconSet" [value]="setNum">Set: {{setNum - 8}}</ion-option>
+      <ion-label>Choose Icons</ion-label>
+      <ion-select interface="popover" [(ngModel)]="edits.icon">
+        <ion-option *ngFor="let setNum of iconSet" [value]="setNum"> Set: {{setNum - 8}}</ion-option>
       </ion-select>
+    </ion-item>
+
+    <ion-list-header *ngIf="edits.locations.length > 0" >Saved Locations</ion-list-header>
+    <ion-item *ngFor="let place of edits.locations">{{place.toString()}}
+      <button ion-button item-right icon-only clear color="danger" (click)="deleteLocation(place)">
+        <ion-icon name="trash"></ion-icon>
+      </button>
     </ion-item>
   </ion-list>
 </ion-content>

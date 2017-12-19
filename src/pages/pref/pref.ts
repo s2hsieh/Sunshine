@@ -1,8 +1,9 @@
 import { Volume, Degree, Speed, Distance, Pressure, EVENT, IconSetList } from './../../providers/strings';
 import { PreferencesService } from './../../services/preferences';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavParams, Events } from 'ionic-angular';
 import { Pref } from '../../models/IPref';
+import { Place } from '../../models/IPlace';
 
 @IonicPage()
 @Component({
@@ -22,12 +23,16 @@ export class PrefPage {
   press = Pressure;
 
 
-  constructor(private event: Events, private ps: PreferencesService, public navCtrl: NavController, public navParams: NavParams) { }
+  constructor(private event: Events, private ps: PreferencesService, public navParams: NavParams) { }
 
   ionViewDidLoad() {
     this.original = this.navParams.get("pref");
     // clone origianl
     this.edits = Object.assign({}, this.original);
+  }
+
+  deleteLocation(place: Place){
+    this.edits.locations = this.edits.locations.filter(p => p.toString() != place.toString());
   }
 
   ionViewWillLeave() {
