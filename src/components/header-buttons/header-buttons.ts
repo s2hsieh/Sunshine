@@ -6,6 +6,7 @@ import { App } from 'ionic-angular/components/app/app';
 import { Events, PopoverController } from 'ionic-angular';
 import { EVENT } from '../../providers/strings';
 import { LocationSelectComponent } from '../location-select/location-select';
+import { TabsPage } from '../../pages/tabs/tabs';
 
 @Component({
   selector: 'header-buttons',
@@ -30,6 +31,15 @@ export class HeaderButtonsComponent implements OnInit {
   openSavedList(ev) {
     let data = { locations: this.pref.locations, search: this.search, isSaved: this.placeAdded }
     let list = this.popOverCrl.create(LocationSelectComponent, data);
+    list.onDidDismiss((place: Place) => {
+      if (place === null) {
+        return;
+      } else if (typeof place === "undefined") {
+        this.appCtrl.getRootNav().push(TabsPage);
+      } else if (place.toString() != this.search.toString()) {
+        this.appCtrl.getRootNav().push(TabsPage, { place: place });
+      }
+    });
     list.present({ ev: ev });
   }
 

@@ -19,7 +19,6 @@ import { Geolocation } from '@ionic-native/geolocation'
 import { NativeStorage } from '@ionic-native/native-storage'
 import { PipesModule } from '../pipes/pipes.module';
 
-
 @NgModule({
   declarations: [
     MyApp,
@@ -51,7 +50,7 @@ import { PipesModule } from '../pipes/pipes.module';
     NativeStorage,
     DataService,
     PreferencesService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }
