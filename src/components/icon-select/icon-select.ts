@@ -8,13 +8,17 @@ import { IconSetList } from '../../providers/strings';
 })
 export class IconSelectComponent {
 
-  iconChoice: number;
+  private iconChoice: number;
   iconSet = IconSetList;
   private iconUrlBase = "https://icons.wxug.com/i/c/";
   private iconUrlEnd = "/partlycloudy.gif";
 
   constructor(param: NavParams, private viewCtrl: ViewController) {
     this.iconChoice = param.data.setNum;
+    // IconSelect location changes on orientation change so close it
+    window.addEventListener("orientationchange", () => {
+      this.viewCtrl.dismiss(undefined);
+    })
   }
 
   iconUrl(setNum: number) {
@@ -22,7 +26,7 @@ export class IconSelectComponent {
   }
 
   close(){
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(null);
   }
 
   selected(setNum: number) {

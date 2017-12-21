@@ -2,7 +2,7 @@ import { IconSelectComponent } from './../../components/icon-select/icon-select'
 import { Volume, Degree, Speed, Distance, Pressure, EVENT, IconSetList } from './../../providers/strings';
 import { PreferencesService } from './../../services/preferences';
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, Events, ModalController } from 'ionic-angular';
+import { IonicPage, NavParams, Events, PopoverController } from 'ionic-angular';
 import { Pref } from '../../models/IPref';
 import { Place } from '../../models/IPlace';
 
@@ -24,7 +24,7 @@ export class PrefPage {
   press = Pressure;
 
 
-  constructor(private modalCtrl: ModalController, private event: Events, private ps: PreferencesService, public navParams: NavParams) { }
+  constructor(private popOverCtrl: PopoverController, private event: Events, private ps: PreferencesService, public navParams: NavParams) { }
 
   ionViewDidLoad() {
     this.original = this.navParams.get("pref");
@@ -37,11 +37,19 @@ export class PrefPage {
   }
 
   openIconSelect() {
-    let model = this.modalCtrl.create(IconSelectComponent, { setNum: this.edits.icon });
-    model.onDidDismiss((iconChoice: number) => {
-      this.edits.icon = iconChoice || this.edits.icon;
+    let data = { setNum: this.edits.icon };
+    let grid = this.popOverCtrl.create(IconSelectComponent, data);
+    grid.onDidDismiss((iconChoice: number) => {
+      if (iconChoice === null) {
+        return;
+      } else if (typeof iconChoice === "undefined") {
+        // reopen IconSelect when scren orientation changes
+        this.openIconSelect();
+      } else if (iconChoice != this.edits.icon) {
+        this.edits.icon = iconChoice;
+      }
     });
-    model.present();
+    grid.present();
   }
 
   ionViewWillLeave() {

@@ -1,10 +1,10 @@
 <ion-card>
     <ion-card-header>
+        <button ion-button clear icon-only float-right color="dark" (click)="close()">
+            <ion-icon name="close"></ion-icon>
+        </button>
         <ion-card-title>
-            Choose Icon Set
-            <button ion-button clear icon-only float-right color="dark" (click)="close()">
-                <ion-icon name="close"></ion-icon>
-            </button>
+            Icon Set
         </ion-card-title>
     </ion-card-header>
 
@@ -12,7 +12,7 @@
         <ion-grid>
             <ion-row>
                 <ion-col col-6 *ngFor="let setNum of iconSet">
-                    <button ion-button block large clear (click)="selected(setNum)">
+                    <button ion-button icon-only clear block (click)="selected(setNum)">
                         <img [src]="iconUrl(setNum)" />
                     </button>
                 </ion-col>
