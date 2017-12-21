@@ -1,7 +1,8 @@
+import { IconSelectComponent } from './../../components/icon-select/icon-select';
 import { Volume, Degree, Speed, Distance, Pressure, EVENT, IconSetList } from './../../providers/strings';
 import { PreferencesService } from './../../services/preferences';
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavParams, Events, ModalController } from 'ionic-angular';
 import { Pref } from '../../models/IPref';
 import { Place } from '../../models/IPlace';
 
@@ -23,7 +24,7 @@ export class PrefPage {
   press = Pressure;
 
 
-  constructor(private event: Events, private ps: PreferencesService, public navParams: NavParams) { }
+  constructor(private modalCtrl: ModalController, private event: Events, private ps: PreferencesService, public navParams: NavParams) { }
 
   ionViewDidLoad() {
     this.original = this.navParams.get("pref");
@@ -31,8 +32,16 @@ export class PrefPage {
     this.edits = Object.assign({}, this.original);
   }
 
-  deleteLocation(place: Place){
+  deleteLocation(place: Place) {
     this.edits.locations = this.edits.locations.filter(p => p.toString() != place.toString());
+  }
+
+  openIconSelect() {
+    let model = this.modalCtrl.create(IconSelectComponent, { setNum: this.edits.icon });
+    model.onDidDismiss((iconChoice: number) => {
+      this.edits.icon = iconChoice || this.edits.icon;
+    });
+    model.present();
   }
 
   ionViewWillLeave() {

@@ -49,9 +49,7 @@
     <ion-list-header>Icon Set</ion-list-header>
     <ion-item>
       <ion-label>Choose Icons</ion-label>
-      <ion-select interface="popover" [(ngModel)]="edits.icon">
-        <ion-option *ngFor="let setNum of iconSet" [value]="setNum"> Set: {{setNum - 8}}</ion-option>
-      </ion-select>
+      <button ion-button item-right color="dark" clear (click)="openIconSelect()" >Set {{edits.icon - 5}} <ion-icon name="arrow-forward"></ion-icon> </button>
     </ion-item>
 
     <ion-list-header *ngIf="edits.locations.length > 0" >Saved Locations</ion-list-header>

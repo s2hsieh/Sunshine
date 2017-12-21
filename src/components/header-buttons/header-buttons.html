@@ -1,5 +1,5 @@
 <ion-toolbar>
-  <ion-label (click)="openSavedList($event)" > {{search.city}} <ion-icon name="arrow-dropdown"></ion-icon> </ion-label>
+  <ion-title (click)="openSavedList($event)"> {{search.city}} <ion-icon float-right name="arrow-dropdown"></ion-icon> </ion-title>
   <ion-buttons end>
     <button *ngIf="search" ion-button (click)="toggleAddState()">
       <ion-icon *ngIf="!placeAdded" name="star-outline"></ion-icon>

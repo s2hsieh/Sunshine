@@ -1,4 +1,4 @@
-<ion-list>
+<ion-list no-lines>
   <ion-item (click)="selected(undefined)" *ngIf="!search.isGPS"> <ion-icon name="locate"></ion-icon> Current Location</ion-item> 
   <ion-item *ngIf="isNew" (click)="selected(null)"> <ion-icon *ngIf="search.isGPS" name="locate"></ion-icon> {{search.city}} </ion-item>
   <ion-list-header>Saved Locations</ion-list-header>

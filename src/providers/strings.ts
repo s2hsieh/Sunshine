@@ -37,7 +37,7 @@ export enum Observation {
     visibility
 }
 
-export const IconSetList = [9, 10, 11];
+export const IconSetList = [6, 7, 8, 9, 10, 11];
 
 export enum EVENT {
     init = "initialized preferences",

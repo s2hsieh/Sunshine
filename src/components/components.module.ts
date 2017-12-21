@@ -4,10 +4,11 @@ import { HeaderButtonsComponent } from './header-buttons/header-buttons';
 import { IonicModule } from 'ionic-angular/module';
 import { PipesModule } from '../pipes/pipes.module';
 import { LocationSelectComponent } from './location-select/location-select';
+import { IconSelectComponent } from './icon-select/icon-select';
 @NgModule({
-	declarations: [HeaderButtonsComponent, ForecastListComponent, LocationSelectComponent],
+	declarations: [HeaderButtonsComponent, ForecastListComponent, LocationSelectComponent, IconSelectComponent],
 	imports: [IonicModule, PipesModule],
 	exports: [HeaderButtonsComponent, ForecastListComponent],
-	entryComponents: [LocationSelectComponent]
+	entryComponents: [LocationSelectComponent, IconSelectComponent]
 })
-export class ComponentsModule { }
+export class ComponentsModule {}
