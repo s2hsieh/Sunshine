@@ -1,5 +1,5 @@
 import { Pref } from './../../models/IPref';
-import { ForecastHour } from './../../models/IForeCastHour';
+import { ForecastHour, Hour } from './../../models/IForeCastHour';
 import { Place } from './../../models/IPlace';
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
@@ -14,7 +14,6 @@ export class ByHourPage implements OnInit {
   search: Place;
   forecasts: ForecastHour[];
   pref: Pref;
-  date: string;
 
   deg = Degree;
   vol = Volume;
@@ -24,13 +23,22 @@ export class ByHourPage implements OnInit {
     this.search = param.data.search;
     this.forecasts = param.data.forecasts;
     this.pref = param.data.pref;
-    let firstDay = this.forecasts[0].FCTTIME;
-    this.date = [firstDay.month_name, firstDay.mday].join(" ");
   }
 
   ngOnInit() {
     this.event.subscribe(EVENT.change, (pref: Pref) => this.pref = pref);
   }
 
+  getDate(hour: Hour) {
+    return [hour.month_name, hour.mday].join(" ");
+  }
 
+  insertHeader(forecast: ForecastHour, index: number) {
+    let hour = forecast.FCTTIME;
+    if (hour.hour == "0" && index != 0) {
+      // cannot access getDate from here
+      return hour;
+    }
+    return null;
+  }
 }
