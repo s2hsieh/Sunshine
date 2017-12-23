@@ -30,7 +30,7 @@ export class ThreeDays implements OnInit {
       this.pref = pref;
       console.log(pref);
     });
-    this.event.subscribe(EVENT.change, (pref) => {
+    this.event.subscribe(EVENT.change, (pref: Pref) => {
       this.pref = pref;
       console.log(pref);
     });

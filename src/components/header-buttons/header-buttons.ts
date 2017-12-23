@@ -3,7 +3,7 @@ import { Place } from './../../models/IPlace';
 import { Pref } from './../../models/IPref';
 import { Component, Input, OnInit } from '@angular/core';
 import { App } from 'ionic-angular/components/app/app';
-import { Events, PopoverController } from 'ionic-angular';
+import { Events, PopoverController, NavController } from 'ionic-angular';
 import { EVENT } from '../../providers/strings';
 import { LocationSelectComponent } from '../location-select/location-select';
 import { TabsPage } from '../../pages/tabs/tabs';
@@ -25,7 +25,6 @@ export class HeaderButtonsComponent implements OnInit {
     this.pref.locations = this.pref.locations.map(v => new Place(v.cord, v.city, v.provOrState, v.country))
     console.log(this.pref.locations);
     this.placeAdded = this.isSaved();
-
   }
 
   openSavedList(ev) {
@@ -35,20 +34,20 @@ export class HeaderButtonsComponent implements OnInit {
       if (place === null) {
         return;
       } else if (typeof place === "undefined") {
-        this.appCtrl.getRootNav().push(TabsPage);
+        (<NavController>this.appCtrl.getRootNav()).push(TabsPage);
       } else if (place.toString() != this.search.toString()) {
-        this.appCtrl.getRootNav().push(TabsPage, { place: place });
+        (<NavController>this.appCtrl.getRootNav()).push(TabsPage, { place: place });
       }
     });
     list.present({ ev: ev });
   }
 
   openSearch() {
-    this.appCtrl.getRootNav().push("SearchPage");
+    (<NavController>this.appCtrl.getRootNav()).push("SearchPage");
   }
 
   openPref() {
-    this.appCtrl.getRootNav().push("PrefPage", { pref: this.pref });
+    (<NavController>this.appCtrl.getRootNav()).push("PrefPage", { pref: this.pref });
   }
 
   private isSaved() {

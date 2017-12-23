@@ -1,4 +1,3 @@
-import { ComponentsModule } from './../components/components.module';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,6 +8,7 @@ import { ThreeDays } from '../pages/three-days/three-days';
 import { TenDays } from '../pages/ten-days/ten-days';
 import { Current } from '../pages/current/current';
 import { TabsPage } from '../pages/tabs/tabs';
+import { ByHourPage } from './../pages/by-hour/by-hour';
 
 import { DataService } from './../services/data';
 import { PreferencesService } from '../services/preferences';
@@ -17,7 +17,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation'
 import { NativeStorage } from '@ionic-native/native-storage'
+
 import { PipesModule } from '../pipes/pipes.module';
+import { ComponentsModule } from './../components/components.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { PipesModule } from '../pipes/pipes.module';
     ThreeDays,
     TenDays,
     Current,
-    TabsPage
+    TabsPage,
+    ByHourPage
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import { PipesModule } from '../pipes/pipes.module';
     ThreeDays,
     TenDays,
     Current,
-    TabsPage
+    TabsPage,
+    ByHourPage
   ],
   providers: [
     StatusBar,

@@ -2,16 +2,13 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Injectable } from '@angular/core';
 import { Http, Response, Jsonp } from '@angular/http';
 import { Place } from '../models/IPlace';
+import { KEYS } from '../providers/strings';
 
 @Injectable()
 export class DataService {
 
-    private keys = {
-        weatherUnderground: "1760644cb1b2f8da",
-        bingMaps: "Au59ZRQJvN8hb2HiQpgzuGzxKOab4hVhR64mV_DEnWRhKOMmGohCHcUYIkLTKAxf"
-    }
     private urlEnd: string;
-    private weatherUrlBase: string = `http://api.wunderground.com/api/${this.keys.weatherUnderground}/`;
+    private weatherUrlBase: string = `http://api.wunderground.com/api/${KEYS.weatherUnderground}/`;
     private locationUrlBase: string = "http://dev.virtualearth.net/REST/v1/Locations";
     private results: Place[];
 
@@ -34,7 +31,7 @@ export class DataService {
     searchLocation(search: string) {
         let that = this;
         this.results = [];
-        this.jsonp.get(`${this.locationUrlBase}?q=${search}&key=${this.keys.bingMaps}&jsonp=JSONP_CALLBACK`)
+        this.jsonp.get(`${this.locationUrlBase}?q=${search}&key=${KEYS.bingMaps}&jsonp=JSONP_CALLBACK`)
             .toPromise().then(res => {
                 let data: any[];
                 console.log(res.json());

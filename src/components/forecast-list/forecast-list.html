@@ -1,5 +1,5 @@
 <ion-list>
-  <ion-item *ngFor="let day of forecasts">
+  <ion-item *ngFor="let day of forecasts" (click)="openHourlyForecast(day.date)">
     <h1>{{day.period == 1 ? "Today" : day.date.weekday}}</h1>
     <ion-row>
       <ion-col col-3 text-center>
@@ -10,7 +10,8 @@
       </ion-col>
       <ion-col col-4>
         <h2>
-          <ion-icon name="thermometer"></ion-icon> {{pref.degree == deg.metric ? day.high.celsius : day.high.fahrenheit}}{{pref.degree|degSymbol}} | {{pref.degree == deg.metric ? day.low.celsius : day.low.fahrenheit}}{{pref.degree|degSymbol}}</h2>
+          <ion-icon name="thermometer"></ion-icon> {{pref.degree == deg.metric ? day.high.celsius : day.high.fahrenheit}}{{pref.degree|degSymbol}} | {{pref.degree
+          == deg.metric ? day.low.celsius : day.low.fahrenheit}}{{pref.degree|degSymbol}}</h2>
       </ion-col>
 
       <ion-col col-4>

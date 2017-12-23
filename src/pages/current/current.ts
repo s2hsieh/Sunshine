@@ -25,11 +25,11 @@ export class Current implements OnInit {
   }
 
   ngOnInit() {
-    this.event.subscribe(EVENT.init, (pref) => {
+    this.event.subscribe(EVENT.init, (pref: Pref) => {
       this.pref = pref;
       console.log(pref);
     });
-    this.event.subscribe(EVENT.change, (pref) => {
+    this.event.subscribe(EVENT.change, (pref: Pref) => {
       this.pref = pref;
       console.log(pref);
     });

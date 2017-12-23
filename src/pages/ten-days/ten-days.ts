@@ -30,7 +30,7 @@ export class TenDays implements OnInit {
       this.pref = pref;
       console.log(pref);
     });
-    this.event.subscribe(EVENT.change, (pref) => {
+    this.event.subscribe(EVENT.change, (pref: Pref) => {
       this.pref = pref;
       console.log(pref);
     });
@@ -50,6 +50,8 @@ export class TenDays implements OnInit {
       } catch (error) {
         throw new Error("Failed to fetch data from API");
       }
+      // to allow hourly forecast to have enough data to work with
+      this.forecasts.pop();
       console.log(this.forecasts);
       refresher ? refresher.complete() : loader.dismiss();
     }).catch(err => {

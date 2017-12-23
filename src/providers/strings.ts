@@ -1,7 +1,8 @@
 export enum Feature {
     now = "conditions",
     three = "forecast",
-    ten = "forecast10day"
+    ten = "forecast10day",
+    hourly = "hourly10day"
 }
 
 export enum Distance {
@@ -43,4 +44,9 @@ export enum EVENT {
     init = "initialized preferences",
     change = "changed preferences",
     gps = "GPS location"
+}
+
+export enum KEYS {
+    weatherUnderground = "1760644cb1b2f8da",
+    bingMaps = "Au59ZRQJvN8hb2HiQpgzuGzxKOab4hVhR64mV_DEnWRhKOMmGohCHcUYIkLTKAxf"
 }
