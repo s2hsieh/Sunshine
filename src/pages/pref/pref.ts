@@ -23,8 +23,9 @@ export class PrefPage {
   dist = Distance;
   press = Pressure;
 
+  readonly unitDic = {degree: this.deg, volume: this.vol, speed: this.speed, distance: this.dist, pressure: this.press};
 
-  constructor(private popOverCtrl: PopoverController, private event: Events, private ps: PreferencesService, public navParams: NavParams) { }
+  constructor(private popOverCtrl: PopoverController, private event: Events, private ps: PreferencesService, public navParams: NavParams) {}
 
   ionViewDidLoad() {
     this.original = this.navParams.get("pref");

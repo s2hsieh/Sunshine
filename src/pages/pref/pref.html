@@ -10,39 +10,10 @@
 <ion-content padding>
   <ion-list *ngIf="edits">
     <ion-list-header>Units</ion-list-header>
-    <ion-item>
-      <ion-label>Temperature</ion-label>
-      <ion-select interface="popover" [(ngModel)]="edits.degree">
-        <ion-option>{{deg.metric}}</ion-option>
-        <ion-option>{{deg.imperial}}</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>Precipitation</ion-label>
-      <ion-select interface="popover" [(ngModel)]="edits.volume">
-        <ion-option>{{vol.metric}}</ion-option>
-        <ion-option>{{vol.imperial}}</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>Wind Speed</ion-label>
-      <ion-select interface="popover" [(ngModel)]="edits.speed">
-        <ion-option>{{speed.metric}}</ion-option>
-        <ion-option>{{speed.imperial}}</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>Visibility</ion-label>
-      <ion-select interface="popover" [(ngModel)]="edits.distance">
-        <ion-option>{{dist.metric}}</ion-option>
-        <ion-option>{{dist.imperial}}</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>Pressure</ion-label>
-      <ion-select interface="popover" [(ngModel)]="edits.pressure">
-        <ion-option>{{press.metric}}</ion-option>
-        <ion-option>{{press.imperial}}</ion-option>
+    <ion-item *ngFor="let key of unitDic|keys">
+      <ion-label>{{key|properNoun}}:</ion-label>
+      <ion-select [(ngModel)]="edits[key]" interface="popover">
+        <ion-option *ngFor="let unit of unitDic[key]|keys">{{unitDic[key][unit]}}</ion-option>
       </ion-select>
     </ion-item>
 
