@@ -3,7 +3,7 @@ import { ForecastHour, Hour } from './../../models/IForeCastHour';
 import { Place } from './../../models/IPlace';
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
-import { EVENT, Degree, Volume, Speed } from '../../providers/strings';
+import { EVENTS, Degree, Volume, Speed } from '../../providers/strings';
 
 @Component({
   selector: 'page-by-hour',
@@ -26,7 +26,7 @@ export class ByHourPage implements OnInit {
   }
 
   ngOnInit() {
-    this.event.subscribe(EVENT.change, (pref: Pref) => this.pref = pref);
+    this.event.subscribe(EVENTS.change, (pref: Pref) => this.pref = pref);
   }
 
   getDate(hour: Hour) {

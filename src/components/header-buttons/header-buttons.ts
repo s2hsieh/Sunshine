@@ -4,7 +4,7 @@ import { Pref } from './../../models/IPref';
 import { Component, Input, OnInit } from '@angular/core';
 import { App } from 'ionic-angular/components/app/app';
 import { Events, PopoverController, NavController } from 'ionic-angular';
-import { EVENT } from '../../providers/strings';
+import { EVENTS } from '../../providers/strings';
 import { LocationSelectComponent } from '../location-select/location-select';
 import { TabsPage } from '../../pages/tabs/tabs';
 
@@ -23,7 +23,6 @@ export class HeaderButtonsComponent implements OnInit {
   ngOnInit() {
     // my custom toString is missing after passing through @Input, hence recreate the objects as the Place class again
     this.pref.locations = this.pref.locations.map(v => new Place(v.cord, v.city, v.provOrState, v.country))
-    console.log(this.pref.locations);
     this.placeAdded = this.isSaved();
   }
 
@@ -69,7 +68,7 @@ export class HeaderButtonsComponent implements OnInit {
     }
     this.ps.setPref(this.pref).then(p => {
       this.placeAdded = !this.placeAdded;
-      this.event.publish(EVENT.change, this.pref);
+      this.event.publish(EVENTS.change, this.pref);
     });
   }
 

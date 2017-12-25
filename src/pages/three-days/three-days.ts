@@ -3,9 +3,8 @@ import { DataService } from './../../services/data';
 import { Component, OnInit } from '@angular/core';
 import { Refresher, LoadingController, NavParams, Events } from 'ionic-angular';
 import { Place } from '../../models/IPlace';
-import { Feature, Observation, EVENT } from '../../providers/strings';
+import { Feature, Observation, EVENTS } from '../../providers/strings';
 import { Pref } from '../../models/IPref';
-import { PreferencesService } from '../../services/preferences';
 
 @Component({
   templateUrl: 'three-days.html'
@@ -17,23 +16,13 @@ export class ThreeDays implements OnInit {
   pref: Pref;
   obs = Observation;
 
-  constructor(private ps:PreferencesService, private event:Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
-    this.search = param.data;
-    // check if data was passed in
-    if (!this.search.city) {
-      this.search = undefined;
-    }
+  constructor(event:Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
+    this.search = param.data.search;;
+    this.pref = param.data.pref;
+    event.subscribe(EVENTS.change, pref => this.pref = pref);
   }
 
   ngOnInit() {
-    this.ps.getPref().then(pref => {
-      this.pref = pref;
-      console.log(pref);
-    });
-    this.event.subscribe(EVENT.change, (pref: Pref) => {
-      this.pref = pref;
-      console.log(pref);
-    });
     this.fetchData(null);
   }
 
@@ -50,7 +39,6 @@ export class ThreeDays implements OnInit {
       } catch (error) {
         throw new Error("Failed to fetch data from API");
       }
-      console.log(this.forecasts);
       refresher ? refresher.complete() : loader.dismiss();
     }).catch(err => {
       console.log(err);

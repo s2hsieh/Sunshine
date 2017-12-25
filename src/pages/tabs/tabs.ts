@@ -5,23 +5,27 @@ import { ThreeDays } from '../three-days/three-days';
 import { TenDays } from '../ten-days/ten-days';
 import { Current } from '../current/current';
 import { Place } from '../../models/IPlace';
+import { EVENTS } from '../../providers/strings';
+import { Pref } from '../../models/IPref';
 import { PreferencesService } from '../../services/preferences';
-import { EVENT } from '../../providers/strings';
 
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
-  place: Place;
+  data: { search: Place, pref: Pref } = {search: null, pref: null};
 
   tab1Root = Current;
   tab2Root = ThreeDays;
   tab3Root = TenDays;
 
-  constructor(event:Events, params: NavParams, ps:PreferencesService) {
-    this.place = params.get("place");
+  constructor(event: Events, params: NavParams, ps: PreferencesService) {
+    this.data.search = params.data.place;
+    event.subscribe(EVENTS.gps, place => this.data.search = place);
+    event.subscribe(EVENTS.init, pref => this.data.pref = pref);
     ps.initialize();
-    event.subscribe(EVENT.gps, place => this.place = place)
+    // to pass on pref changes to unconstructed tabs
+    event.subscribe(EVENTS.change, pref => this.data.pref = pref);
   }
 }

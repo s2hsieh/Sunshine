@@ -40,7 +40,7 @@ export enum Observation {
 
 export const IconSetList = [6, 7, 8, 9, 10, 11];
 
-export enum EVENT {
+export enum EVENTS {
     init = "initialized preferences",
     change = "changed preferences",
     gps = "GPS location"

@@ -4,7 +4,7 @@ import { DataService } from './../../services/data';
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, Refresher, NavParams, Events } from 'ionic-angular';
 import { Pref } from '../../models/IPref';
-import { Feature, Degree, Volume, Speed, Pressure, Distance, Observation, EVENT } from '../../providers/strings';
+import { Feature, Degree, Volume, Speed, Pressure, Distance, Observation, EVENTS } from '../../providers/strings';
 
 @Component({
   templateUrl: 'current.html'
@@ -17,22 +17,14 @@ export class Current implements OnInit {
   obs = Observation;
 
   constructor(private event: Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
-    this.search = param.data;
-    // check if data was passed in
-    if (!this.search.city) {
-      this.search = undefined;
-    }
+    this.search = param.data.search;
+    this.pref = param.data.pref;
+    event.subscribe(EVENTS.change, pref => this.pref = pref);
+    // account for when this tab gets constructed before initialization complets
+    event.subscribe(EVENTS.init, pref => this.pref = pref);
   }
 
   ngOnInit() {
-    this.event.subscribe(EVENT.init, (pref: Pref) => {
-      this.pref = pref;
-      console.log(pref);
-    });
-    this.event.subscribe(EVENT.change, (pref: Pref) => {
-      this.pref = pref;
-      console.log(pref);
-    });
     this.fetchData(null);
   }
 
@@ -64,11 +56,10 @@ export class Current implements OnInit {
       } catch (error) {
         throw new Error("Failed to fetch data from API");
       }
-      console.log(this.forecast);
       if (!this.search) {
         let loc = this.forecast.display_location;
         this.search = new Place({ lat: loc.latitude, lon: loc.longitude }, loc.city, loc.state, loc.country_iso3166, true);
-        this.event.publish(EVENT.gps, this.search);
+        this.event.publish(EVENTS.gps, this.search);
       }
       refresher ? refresher.complete() : loader.dismiss();
     }).catch(err => {

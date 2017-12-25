@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Pref } from '../models/IPref';
-import { Distance, Speed, Pressure, Volume, Degree, EVENT } from '../providers/strings';
+import { Distance, Speed, Pressure, Volume, Degree, EVENTS } from '../providers/strings';
 import { Events } from 'ionic-angular/util/events';
 
 @Injectable()
@@ -21,12 +21,12 @@ export class PreferencesService {
 
     initialize() {
         this.nativeStorage.getItem("pref").then(pref => {
-            this.event.publish(EVENT.init, pref);
+            this.event.publish(EVENTS.init, pref);
         }).catch(err => {
             if (err.code == 2 || err.code.code == 2) {
                 this.nativeStorage.setItem("pref", this.default).then(pref => {
                     console.log("initialize preferences");
-                    this.event.publish(EVENT.init, pref);
+                    this.event.publish(EVENTS.init, pref);
                 });
             } else {
                 console.log(err);

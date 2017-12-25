@@ -34,7 +34,6 @@ export class DataService {
         this.jsonp.get(`${this.locationUrlBase}?q=${search}&key=${KEYS.bingMaps}&jsonp=JSONP_CALLBACK`)
             .toPromise().then(res => {
                 let data: any[];
-                console.log(res.json());
                 try {
                     data = res.json().resourceSets[0].resources;
                 } catch (error) {

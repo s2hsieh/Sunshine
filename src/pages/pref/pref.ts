@@ -1,5 +1,5 @@
 import { IconSelectComponent } from './../../components/icon-select/icon-select';
-import { Volume, Degree, Speed, Distance, Pressure, EVENT, IconSetList } from './../../providers/strings';
+import { Volume, Degree, Speed, Distance, Pressure, EVENTS, IconSetList } from './../../providers/strings';
 import { PreferencesService } from './../../services/preferences';
 import { Component } from '@angular/core';
 import { IonicPage, NavParams, Events, PopoverController } from 'ionic-angular';
@@ -58,7 +58,7 @@ export class PrefPage {
       this.ps.setPref(this.edits).then(r => {
         // destory original before sending changes
         this.original = this.edits;
-        this.event.publish(EVENT.change, this.edits);
+        this.event.publish(EVENTS.change, this.edits);
         console.log("saved preferences");
       });
     }

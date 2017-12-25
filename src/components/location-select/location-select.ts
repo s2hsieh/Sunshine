@@ -2,7 +2,7 @@ import { Pref } from './../../models/IPref';
 import { Component } from '@angular/core';
 import { Place } from '../../models/IPlace';
 import { NavParams, Events, ViewController } from 'ionic-angular';
-import { EVENT } from '../../providers/strings';
+import { EVENTS } from '../../providers/strings';
 
 @Component({
   selector: 'location-select',
@@ -20,7 +20,7 @@ export class LocationSelectComponent {
     this.isNew = !param.data.isSaved;
 
     // the constructor only runs once per page, hence must subscribe to preference changes
-    event.subscribe(EVENT.change, (pref: Pref) => {
+    event.subscribe(EVENTS.change, (pref: Pref) => {
       this.locations = pref.locations;
     });
   }
