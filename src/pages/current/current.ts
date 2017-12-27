@@ -1,8 +1,8 @@
 import { Place } from './../../models/IPlace';
 import { CurrentObservation } from './../../models/ICurrentObservation';
 import { DataService } from './../../services/data';
-import { Component, OnInit } from '@angular/core';
-import { LoadingController, Refresher, NavParams, Events } from 'ionic-angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { LoadingController, Refresher, NavParams, Events, Content } from 'ionic-angular';
 import { Pref } from '../../models/IPref';
 import { Feature, Degree, Volume, Speed, Pressure, Distance, Observation, EVENTS } from '../../providers/strings';
 
@@ -15,6 +15,8 @@ export class Current implements OnInit {
   search: Place;
   pref: Pref;
   obs = Observation;
+
+  @ViewChild(Content) content : Content;
 
   constructor(private event: Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
     this.search = param.data.search;
@@ -61,6 +63,7 @@ export class Current implements OnInit {
         this.search = new Place({ lat: loc.latitude, lon: loc.longitude }, loc.city, loc.state, loc.country_iso3166, true);
         this.event.publish(EVENTS.gps, this.search);
       }
+      this.content.resize();
       refresher ? refresher.complete() : loader.dismiss();
     }).catch(err => {
       console.log(err);
