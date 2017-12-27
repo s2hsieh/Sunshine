@@ -1,8 +1,9 @@
+import { Events } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Injectable } from '@angular/core';
 import { Http, Response, Jsonp } from '@angular/http';
 import { Place } from '../models/IPlace';
-import { KEYS } from '../providers/strings';
+import { KEYS, EVENTS } from '../providers/strings';
 
 @Injectable()
 export class DataService {
@@ -12,7 +13,7 @@ export class DataService {
     private locationUrlBase: string = "http://dev.virtualearth.net/REST/v1/Locations";
     private results: Place[];
 
-    constructor(private http: Http, private jsonp: Jsonp, private geo: Geolocation) { }
+    constructor(private http: Http, private jsonp: Jsonp, private geo: Geolocation, private event: Events) { }
 
     private getGPSLocation() {
         return this.geo.getCurrentPosition().then(res => {
@@ -24,14 +25,10 @@ export class DataService {
         });
     }
 
-    getLocationResults(){
-        return this.results;
-    }
-
     searchLocation(search: string) {
         let that = this;
         this.results = [];
-        this.jsonp.get(`${this.locationUrlBase}?q=${search}&key=${KEYS.bingMaps}&jsonp=JSONP_CALLBACK`)
+        this.jsonp.get(`${this.locationUrlBase}?q=${search}&maxResults=10&key=${KEYS.bingMaps}&jsonp=JSONP_CALLBACK`)
             .toPromise().then(res => {
                 let data: any[];
                 try {
@@ -39,6 +36,7 @@ export class DataService {
                 } catch (error) {
                     throw new Error("Failed to get search results");
                 }
+                let numResults = data.length;
                 data.forEach(r => {
                     let cord = r.point.coordinates;
                     that.urlEnd = `/q/${cord[0]},${cord[1]}.json`;
@@ -49,12 +47,16 @@ export class DataService {
                         } catch (error) {
                             throw new Error("Failed to get location name")
                         }
-                        place = new Place({lat: place.lat, lon: place.lon}, place.city, place.state, place.country_iso3166);
+                        place = new Place({ lat: place.lat, lon: place.lon }, place.city, place.state, place.country_iso3166);
                         if (that.results.findIndex(v => place.toString() == v.toString()) < 0) {
                             that.results.push(place);
                         }
+                        numResults--;
+                        if (!numResults) {
+                            this.event.publish(EVENTS.search, this.results);
+                        }
                     })
-                    .catch(that.errorHandler);
+                        .catch(that.errorHandler);
                 });
             }).catch(this.errorHandler);
     }
@@ -78,7 +80,7 @@ export class DataService {
     private errorHandler(err) {
         if (err.message) {
             console.log("Error: " + err.message);
-        }else{
+        } else {
             console.log("Error: " + err);
         }
     }

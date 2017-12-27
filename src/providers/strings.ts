@@ -43,7 +43,8 @@ export const IconSetList = [6, 7, 8, 9, 10, 11];
 export enum EVENTS {
     init = "initialized preferences",
     change = "changed preferences",
-    gps = "GPS location"
+    gps = "GPS location",
+    search = "returned location search"
 }
 
 export enum KEYS {

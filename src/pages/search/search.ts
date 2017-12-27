@@ -1,8 +1,9 @@
 import { TabsPage } from './../tabs/tabs';
 import { DataService } from './../../services/data';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Searchbar } from 'ionic-angular';
+import { IonicPage, NavController, Searchbar, Events } from 'ionic-angular';
 import { Place } from '../../models/IPlace';
+import { EVENTS } from '../../providers/strings';
 
 @IonicPage()
 @Component({
@@ -13,13 +14,14 @@ export class SearchPage {
   places: Place[];
   @ViewChild(Searchbar) searchbar: Searchbar;
 
-  constructor(public navCtrl: NavController, private data: DataService) { }
+  constructor(public navCtrl: NavController, private data: DataService, event: Events) {
+    event.subscribe(EVENTS.search, results => this.places = results);
+  }
 
   onInput(ev) {
     let search: string = ev.target.value;
     if (search) {
       this.data.searchLocation(search);
-      this.places = this.data.getLocationResults();
     } else {
       this.places = [];
     }
