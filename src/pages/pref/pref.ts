@@ -23,9 +23,9 @@ export class PrefPage {
   dist = Distance;
   press = Pressure;
 
-  readonly unitDic = {degree: this.deg, volume: this.vol, speed: this.speed, distance: this.dist, pressure: this.press};
+  readonly unitDic = { degree: this.deg, volume: this.vol, speed: this.speed, distance: this.dist, pressure: this.press };
 
-  constructor(private popOverCtrl: PopoverController, private event: Events, private ps: PreferencesService, public navParams: NavParams) {}
+  constructor(private popOverCtrl: PopoverController, private event: Events, private ps: PreferencesService, public navParams: NavParams) { }
 
   ionViewDidLoad() {
     this.original = this.navParams.get("pref");
@@ -54,7 +54,7 @@ export class PrefPage {
   }
 
   ionViewWillLeave() {
-    if (!Object.is(this.original, this.edits)) {
+    if (!this.compare(this.edits, this.original)) {
       this.ps.setPref(this.edits).then(r => {
         // destory original before sending changes
         this.original = this.edits;
@@ -62,6 +62,19 @@ export class PrefPage {
         console.log("saved preferences");
       });
     }
+  }
+
+  private compare(edit: Pref, original: Pref) {
+    if (edit.degree != original.degree ||
+      edit.distance != original.distance ||
+      edit.icon != original.icon ||
+      edit.locations.length != original.locations.length ||
+      edit.pressure != original.pressure ||
+      edit.speed != original.speed ||
+      edit.volume != original.volume) {
+      return false;
+    }
+    return true;
   }
 
 }
