@@ -5,7 +5,7 @@
   <header-buttons *ngIf="search && pref" [search]="search" [pref]="pref"></header-buttons>
 </ion-header>
 
-<ion-content padding-top>
+<ion-content>
 
   <ion-refresher (ionRefresh)="fetchData($event)">
     <ion-refresher-content></ion-refresher-content>

@@ -20,9 +20,7 @@ export class LocationSelectComponent {
     this.isNew = !param.data.isSaved;
 
     // the constructor only runs once per page, hence must subscribe to preference changes
-    event.subscribe(EVENTS.change, (pref: Pref) => {
-      this.locations = pref.locations;
-    });
+    event.subscribe(EVENTS.change, (pref: Pref) => this.locations = pref.locations);
   }
 
   selected(place: Place) {
