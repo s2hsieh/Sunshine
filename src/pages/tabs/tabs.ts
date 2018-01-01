@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams, Events } from 'ionic-angular';
+import { NavParams, Events, Platform } from 'ionic-angular';
 
 import { ThreeDays } from '../three-days/three-days';
 import { TenDays } from '../ten-days/ten-days';
@@ -20,12 +20,14 @@ export class TabsPage {
   tab2Root = ThreeDays;
   tab3Root = TenDays;
 
-  constructor(event: Events, params: NavParams, ps: PreferencesService) {
+  constructor(platform: Platform, event: Events, params: NavParams, ps: PreferencesService) {
     this.data.search = params.data.place;
     event.subscribe(EVENTS.gps, place => this.data.search = place);
     event.subscribe(EVENTS.init, pref => this.data.pref = pref);
-    ps.initialize();
     // to pass on pref changes to unconstructed tabs
     event.subscribe(EVENTS.change, pref => this.data.pref = pref);
+    platform.ready().then(() => {
+      ps.initialize();
+    });
   }
 }
