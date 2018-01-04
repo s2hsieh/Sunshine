@@ -14,6 +14,7 @@ export class TenDays implements OnInit {
   forecasts: ForecastDay[];
   search: Place;
   pref: Pref;
+  error: any;
   obs = Observation;
 
   constructor(event:Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
@@ -41,8 +42,10 @@ export class TenDays implements OnInit {
       }
       // to allow hourly forecast to have enough data to work with
       this.forecasts.pop();
+      this.error = null;
       refresher ? refresher.complete() : loader.dismiss();
     }).catch(err => {
+      this.error = err;
       console.log(err);
       refresher ? refresher.complete() : loader.dismiss();
     });

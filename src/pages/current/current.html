@@ -11,6 +11,13 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <ion-card *ngIf="error">
+    <ion-card-content>
+      <p text-center>Data failed to load from Weather Underground.</p>
+      <p text-center>Please try agian later.</p>
+    </ion-card-content>
+  </ion-card>
+
   <ion-card *ngIf="forecast && pref">
     <ion-card-header>
       <ion-grid>

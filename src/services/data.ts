@@ -3,7 +3,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Injectable } from '@angular/core';
 import { Http, Response, Jsonp } from '@angular/http';
 import { Place } from '../models/IPlace';
-import { KEYS, EVENTS } from '../providers/strings';
+import { KEYS, EVENTS, Feature } from '../providers/strings';
 
 @Injectable()
 export class DataService {
@@ -40,7 +40,7 @@ export class DataService {
                 data.forEach(r => {
                     let cord = r.point.coordinates;
                     that.urlEnd = `/q/${cord[0]},${cord[1]}.json`;
-                    that.http.get(that.weatherUrlBase + "geolookup" + that.urlEnd).toPromise().then(res => {
+                    that.http.get(that.weatherUrlBase + Feature.loc + that.urlEnd).toPromise().then(res => {
                         let place;
                         try {
                             place = res.json().location;

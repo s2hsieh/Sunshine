@@ -14,6 +14,7 @@ export class ThreeDays implements OnInit {
   forecasts: ForecastDay[];
   search: Place;
   pref: Pref;
+  error: any;
   obs = Observation;
 
   constructor(event:Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
@@ -39,8 +40,10 @@ export class ThreeDays implements OnInit {
       } catch (error) {
         throw new Error("Failed to fetch data from API");
       }
+      this.error = null;
       refresher ? refresher.complete() : loader.dismiss();
     }).catch(err => {
+      this.error = err;
       console.log(err);
       refresher ? refresher.complete() : loader.dismiss();
     });

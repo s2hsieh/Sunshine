@@ -2,7 +2,8 @@ export enum Feature {
     now = "conditions",
     three = "forecast",
     ten = "forecast10day",
-    hourly = "hourly10day"
+    hourly = "hourly10day",
+    loc = "geolookup"
 }
 
 export enum Distance {

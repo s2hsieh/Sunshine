@@ -14,6 +14,7 @@ export class Current implements OnInit {
   forecast: CurrentObservation;
   search: Place;
   pref: Pref;
+  error: any;
   obs = Observation;
 
   @ViewChild(Content) content : Content;
@@ -64,9 +65,11 @@ export class Current implements OnInit {
         this.event.publish(EVENTS.gps, this.search);
       }
       this.content.resize();
+      this.error = null;
       refresher ? refresher.complete() : loader.dismiss();
     }).catch(err => {
       console.log(err);
+      this.error = err;
       refresher ? refresher.complete() : loader.dismiss();
     });
   }
