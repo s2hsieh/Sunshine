@@ -5,8 +5,8 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list *ngIf="places?.length">
-    <ion-item *ngFor="let place of places" (click)="openForecast(place)">
+  <ion-list>
+    <ion-item *ngFor="let place of places|async" (click)="openForecast(place)">
       {{place.toString()}}
     </ion-item>
   </ion-list>

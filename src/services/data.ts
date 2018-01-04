@@ -1,9 +1,10 @@
-import { Events } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Injectable } from '@angular/core';
 import { Http, Response, Jsonp } from '@angular/http';
 import { Place } from '../models/IPlace';
-import { KEYS, EVENTS, Feature } from '../providers/strings';
+import { KEYS, Feature } from '../providers/strings';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class DataService {
@@ -11,9 +12,9 @@ export class DataService {
     private urlEnd: string;
     private weatherUrlBase: string = `http://api.wunderground.com/api/${KEYS.weatherUnderground}/`;
     private locationUrlBase: string = "http://dev.virtualearth.net/REST/v1/Locations";
-    private results: Place[];
+    private results = new Subject<Place[]>();
 
-    constructor(private http: Http, private jsonp: Jsonp, private geo: Geolocation, private event: Events) { }
+    constructor(private http: Http, private jsonp: Jsonp, private geo: Geolocation) { }
 
     private getGPSLocation() {
         return this.geo.getCurrentPosition().then(res => {
@@ -25,9 +26,9 @@ export class DataService {
         });
     }
 
-    searchLocation(search: string) {
+    searchLocation(search: string): Observable<Place[]> {
         let that = this;
-        this.results = [];
+        let results: Place[] = [];
         this.jsonp.get(`${this.locationUrlBase}?q=${search}&maxResults=10&key=${KEYS.bingMaps}&jsonp=JSONP_CALLBACK`)
             .toPromise().then(res => {
                 let data: any[];
@@ -36,7 +37,6 @@ export class DataService {
                 } catch (error) {
                     throw new Error("Failed to get search results");
                 }
-                let numResults = data.length;
                 data.forEach(r => {
                     let cord = r.point.coordinates;
                     that.urlEnd = `/q/${cord[0]},${cord[1]}.json`;
@@ -48,17 +48,15 @@ export class DataService {
                             throw new Error("Failed to get location name")
                         }
                         place = new Place({ lat: place.lat, lon: place.lon }, place.city, place.state, place.country_iso3166);
-                        if (that.results.findIndex(v => place.toString() == v.toString()) < 0) {
-                            that.results.push(place);
-                        }
-                        numResults--;
-                        if (!numResults) {
-                            this.event.publish(EVENTS.search, this.results);
+                        if (results.findIndex(v => place.toString() == v.toString()) < 0) {
+                            results.push(place);
+                            that.results.next(results);
                         }
                     })
-                        .catch(that.errorHandler);
+                    .catch(that.errorHandler);
                 });
             }).catch(this.errorHandler);
+            return this.results.asObservable();
     }
 
     async getForecast(feature: string, location: Place): Promise<Response> {
