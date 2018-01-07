@@ -5,6 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ProperNounPipe implements PipeTransform {
   transform(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    let words = str.split(" ");
+    return words.map(word => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(" ");
   }
 }
