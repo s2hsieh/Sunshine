@@ -16,7 +16,7 @@ export class Current implements OnInit {
   astro: Astronomy;
   search: Place;
   pref: Pref;
-  error: any;
+  error = {default: null, extra: null};
   view = CurrentView.default;
   mode = CurrentView;
   obs = Observation;
@@ -32,7 +32,7 @@ export class Current implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchData(null);
+    this.fetchData(null);    
   }
 
   getObservation(obs: Observation) {
@@ -50,14 +50,14 @@ export class Current implements OnInit {
     }
   }
 
-  private fetchData(refresher: Refresher) {
+  private async fetchData(refresher: Refresher) {
     if (!refresher) {
       var loader = this.loadingCtrl.create({
         content: "Plsease wait..."
       });
       loader.present();
     }
-    this.ds.getForecast(Feature.now, this.search).then(res => {
+    await this.ds.getForecast(Feature.now, this.search).then(res => {
       try {
         this.forecast = <CurrentObservation>res.json().current_observation;
       } catch (error) {
@@ -69,24 +69,23 @@ export class Current implements OnInit {
         this.event.publish(EVENTS.gps, this.search);
       }
       this.content.resize();
-      this.error = null;
-      refresher ? refresher.complete() : loader.dismiss();
+      this.error.default = null;
     }).catch(err => {
       console.error(err);
-      this.error = err;
-      refresher ? refresher.complete() : loader.dismiss();
+      this.error.default = err;
     });
-    this.ds.getForecast(Feature.extra, this.search).then(res => {
+    await this.ds.getForecast(Feature.extra, this.search).then(res => {
       try {
         this.astro = <Astronomy>res.json().moon_phase;
       } catch (error) {
         throw new Error("Failed to fetch data from API");
       }
-      this.error = null;
+      this.error.extra = null;
     }).catch(err => {
       console.error(err);
-      this.error = err;
+      this.error.extra = err;
     });
+    refresher ? refresher.complete() : loader.dismiss();
   }
 
 }

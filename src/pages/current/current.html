@@ -16,14 +16,14 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-card *ngIf="error">
+  <ion-card *ngIf="error.default && view == mode.default || error.extra && view == mode.extra">
     <ion-card-content>
       <p text-center>Data failed to load from Weather Underground.</p>
       <p text-center>Please try agian later.</p>
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="forecast && pref && !error && view == mode.default">
+  <ion-card *ngIf="forecast && pref && view == mode.default">
     <ion-card-header>
       <ion-grid>
         <ion-row align-items-center justify-content-center>
@@ -79,7 +79,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="astro && pref && !error && view == mode.extra">
+  <ion-card *ngIf="astro && pref && view == mode.extra">
     <ion-card-header>
       <h1 text-center>{{astro.phaseofMoon}}</h1>
     </ion-card-header>
