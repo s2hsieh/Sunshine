@@ -59,7 +59,7 @@ export class DataService {
             return this.results.asObservable();
     }
 
-    async getForecast(feature: string, location: Place): Promise<Response> {
+    async getForecast(feature: Feature, location: Place): Promise<Response> {
         let that = this;
         let promise;
         if (!location) {

@@ -18,14 +18,14 @@ export class IconSelectComponent {
     // IconSelect location changes on orientation change so close it
     window.addEventListener("orientationchange", () => {
       this.viewCtrl.dismiss(undefined);
-    })
+    });
   }
 
   iconUrl(setNum: number) {
     return this.iconUrlBase + String.fromCharCode(+setNum + 96) + this.iconUrlEnd;
   }
 
-  close(){
+  close() {
     this.viewCtrl.dismiss(null);
   }
 

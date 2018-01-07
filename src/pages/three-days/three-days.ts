@@ -17,7 +17,7 @@ export class ThreeDays implements OnInit {
   error: any;
   obs = Observation;
 
-  constructor(event:Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
+  constructor(event: Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
     this.search = param.data.search;;
     this.pref = param.data.pref;
     event.subscribe(EVENTS.change, pref => this.pref = pref);

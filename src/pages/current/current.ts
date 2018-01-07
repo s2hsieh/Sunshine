@@ -4,7 +4,8 @@ import { DataService } from './../../services/data';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LoadingController, Refresher, NavParams, Events, Content } from 'ionic-angular';
 import { Pref } from '../../models/IPref';
-import { Feature, Degree, Volume, Speed, Pressure, Distance, Observation, EVENTS } from '../../providers/strings';
+import { Feature, Degree, Volume, Speed, Pressure, Distance, Observation, EVENTS, CurrentView } from '../../providers/strings';
+import { Astronomy } from '../../models/IAstronomy';
 
 @Component({
   templateUrl: 'current.html'
@@ -12,12 +13,15 @@ import { Feature, Degree, Volume, Speed, Pressure, Distance, Observation, EVENTS
 export class Current implements OnInit {
 
   forecast: CurrentObservation;
+  astro: Astronomy;
   search: Place;
   pref: Pref;
   error: any;
+  view = CurrentView.default;
+  mode = CurrentView;
   obs = Observation;
 
-  @ViewChild(Content) content : Content;
+  @ViewChild(Content) content: Content;
 
   constructor(private event: Events, param: NavParams, private ds: DataService, private loadingCtrl: LoadingController) {
     this.search = param.data.search;
@@ -31,7 +35,7 @@ export class Current implements OnInit {
     this.fetchData(null);
   }
 
-  getObservation(obs: number) {
+  getObservation(obs: Observation) {
     switch (obs) {
       case Observation.temp:
         return this.pref.degree == Degree.metric ? this.forecast.temp_c : this.forecast.temp_f;
@@ -68,9 +72,20 @@ export class Current implements OnInit {
       this.error = null;
       refresher ? refresher.complete() : loader.dismiss();
     }).catch(err => {
-      console.log(err);
+      console.error(err);
       this.error = err;
       refresher ? refresher.complete() : loader.dismiss();
+    });
+    this.ds.getForecast(Feature.extra, this.search).then(res => {
+      try {
+        this.astro = <Astronomy>res.json().moon_phase;
+      } catch (error) {
+        throw new Error("Failed to fetch data from API");
+      }
+      this.error = null;
+    }).catch(err => {
+      console.error(err);
+      this.error = err;
     });
   }
 

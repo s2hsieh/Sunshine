@@ -3,7 +3,13 @@ export enum Feature {
     three = "forecast",
     ten = "forecast10day",
     hourly = "hourly10day",
-    loc = "geolookup"
+    loc = "geolookup",
+    extra = "astronomy"
+}
+
+export enum CurrentView{
+    default = "forecast",
+    extra = "astronomy"
 }
 
 export enum Distance {
